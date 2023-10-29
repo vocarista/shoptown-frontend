@@ -11,21 +11,22 @@ import Orders from './pages/Orders';
 import Profile from './pages/Profile';
 import useGeneral from './store/general';
 import useProducts from './store/products';
+import useAuth from './store/auth';
+import axios, { AxiosError, AxiosResponse } from "axios";
 
 function App() {
   const toggleIsMobile = useGeneral((state: any) => state.toggleIsMobile)
   const setAllProducts = useProducts((state: any) => state.setAllProducts)
+  const base = useAuth((state: any) => state.base);
   // const allProducts = useProducts((state: any) => state.allProducts)
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      const response = await fetch('http://localhost:7120/products');
-      const json = await response.json();
-      setAllProducts(json);
-    }
-
-    fetchProducts();
-  }, []);
+    axios.get(`${base}/products`)
+    .then((response: AxiosResponse) => {
+      console.log(response.data);
+      setAllProducts(response.data)
+    }).catch((err: AxiosError) => console.log(err));
+  }, [setAllProducts, base]);
 
   useEffect(() => {
     const handleResize = () => {

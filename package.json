@@ -10,12 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@emotion/react": "^11.11.1",
-    "@emotion/styled": "^11.11.0",
-    "@fontsource/roboto": "^5.0.8",
-    "@mui/icons-material": "^5.14.8",
-    "@mui/material": "^5.14.8",
+    "@radix-ui/themes": "^2.0.0",
     "autoprefixer": "^10.4.15",
+    "axios": "^1.6.0",
     "bootstrap": "^5.3.1",
     "framer-motion": "^10.16.4",
     "postcss": "^8.4.29",
