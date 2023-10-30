@@ -9,7 +9,11 @@ import '@radix-ui/themes/styles.css';
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <BrowserRouter>
-    <Theme> <App /> </Theme>
+    <Theme accentColor="mint"
+  grayColor="sage"
+  panelBackground="translucent"
+  scaling="100%"
+  radius="medium"> <App /> </Theme>
     </BrowserRouter>
   </React.StrictMode>,
 )

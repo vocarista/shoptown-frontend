@@ -1,7 +1,6 @@
 import { create } from 'zustand';
 
 interface UserState {
-    isLoggedIn: boolean;
     username: string;
     cart: string[];
     orders: string[];
@@ -9,7 +8,6 @@ interface UserState {
 }
 
 interface UserActions {
-    toggleIsLoggedIn: () => void;
     setUsername: (newUsername: string) => void;
     addCartItem: (newItem: string) => void;
     addOrderItem: (newItem: string) => void;
@@ -17,8 +15,6 @@ interface UserActions {
 }
 
 const useUser = create<UserState & UserActions>((set) => ({
-    isLoggedIn: false,
-    toggleIsLoggedIn: () => set((state) => ({ ...state, isLoggedIn: !state.isLoggedIn })),
     username: '',
     setUsername: (newUsername) => set((state) => ({ ...state, username: newUsername })),
     cart: [],

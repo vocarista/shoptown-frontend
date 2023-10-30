@@ -18,19 +18,22 @@ function App() {
   const toggleIsMobile = useGeneral((state: any) => state.toggleIsMobile)
   const setAllProducts = useProducts((state: any) => state.setAllProducts)
   const base = useAuth((state: any) => state.base);
-  // const allProducts = useProducts((state: any) => state.allProducts)
+  const setToken = useAuth((state: any) => state.setToken);
+
+  useEffect(() => {
+    setToken(localStorage.getItem('token'));
+  }, [])
 
   useEffect(() => {
     axios.get(`${base}/products`)
     .then((response: AxiosResponse) => {
-      console.log(response.data);
       setAllProducts(response.data)
     }).catch((err: AxiosError) => console.log(err));
   }, [setAllProducts, base]);
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 1000) toggleIsMobile(false);
+      if (window.innerWidth > 1000) toggleIsMobile(false);
       else toggleIsMobile(true)
     }
     handleResize();
