@@ -1,8 +1,6 @@
 import { } from "react";
-import { Button } from "@radix-ui/themes";
-import { useNavigate } from "react-router";
 import NavigationBar from "../components/NavigationBar";
-import useAuth from "../store/auth";
+// import useAuth from "../store/auth";
 import Bg from "../assets/home-bg.jpg";
 
 const backgroundImageStyle = {
@@ -12,7 +10,7 @@ const backgroundImageStyle = {
 };
 
 const Home = () => {
-    const navigate = useNavigate(); 
+    // const navigate = useNavigate(); 
     return <div style={backgroundImageStyle} className="w-screen h-screen">
         <NavigationBar />
     </div>
