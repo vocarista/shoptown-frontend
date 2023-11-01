@@ -8,17 +8,15 @@ interface Auth {
 
 interface SetAuth {
     setToken: (newToken: String) => void;
-    toggleIsLoggedIn: () => void;
+    setIsLoggedIn: (status: boolean) => void;
 }
 
 const useAuth = create<Auth & SetAuth>((set) => ({
     token: '',
-    username: '',
-    password: '',
     isLoggedIn: false,
     base: `https://api.shoptown.vocarista.com`,
     setToken: (newToken) => set((state: any) => ({...state, token: newToken})),
-    toggleIsLoggedIn: () => set((state: any) => ({...state, loggedIn: !state.loggedIn}))
+    setIsLoggedIn: (status) => set((state: any) => ({...state, isLoggedIn: status}))
 }));
 
 export default useAuth;

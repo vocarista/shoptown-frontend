@@ -1,9 +1,15 @@
+const { sage, mint } = require('@radix-ui/colors');
+
 /** @type {import('tailwindcss').Config} */
-export default {
+module.exports = {
   content: ["./src/**/*.{html,js,tsx,ts,jsx}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        ...sage,
+        ...mint,
+      },
+    },
   },
   plugins: [],
-}
-
+};

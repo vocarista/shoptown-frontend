@@ -5,6 +5,7 @@ import './index.css'
 import { BrowserRouter } from 'react-router-dom';
 import { Theme } from '@radix-ui/themes';
 import '@radix-ui/themes/styles.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

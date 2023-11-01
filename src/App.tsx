@@ -19,9 +19,24 @@ function App() {
   const setAllProducts = useProducts((state: any) => state.setAllProducts)
   const base = useAuth((state: any) => state.base);
   const setToken = useAuth((state: any) => state.setToken);
+  const setIsLoggedIn = useAuth((state: any) => state.setIsLoggedIn);
 
   useEffect(() => {
-    setToken(localStorage.getItem('token'));
+    const token = localStorage.getItem('token');
+    if (token) {
+      axios.post(`${base}/user/auth/is-token-valid`, {
+        token: token
+      }).then(response => {
+        if (response.data === true) {
+          setToken(token);
+          setIsLoggedIn(true);
+        }
+      }).catch(err => {
+        console.log(err);
+        setToken('');
+        setIsLoggedIn(false);
+      })
+    }
   }, [])
 
   useEffect(() => {

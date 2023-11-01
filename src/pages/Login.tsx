@@ -4,7 +4,7 @@ import { Button, Card, Flex, Heading, Link, TextField } from '@radix-ui/themes';
 import useAuth from '../store/auth';
 import useGeneral from '../store/general';
 import useUser from '../store/user';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Link as RouterLink, useNavigate, Navigate } from 'react-router-dom';
 import logo from "../assets/logo.png";
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import * as Toast from '@radix-ui/react-toast';
@@ -13,7 +13,7 @@ const Login = () => {
     const isMobile = useGeneral((state: any) => state.isMobile);
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
-    const toggleIsLoggedIn = useAuth((state: any) => state.toggleIsLoggedIn);
+    const setIsLoggedIn = useAuth((state: any) => state.setIsLoggedIn);
     const setToken = useAuth((state: any) => state.setToken);
     const base = useAuth((state: any) => state.base);
     const [showError, setShowError] = useState(false);
@@ -43,7 +43,7 @@ const Login = () => {
                     onOpenChange={setShowError}
                 >
                     <Toast.Title className="[grid-area:_title] mb-[5px] font-medium text-slate12 text-[15px]">
-                        Error Logging in
+                        Error
                     </Toast.Title>
                     <Toast.Description asChild>
                         <time
@@ -74,10 +74,11 @@ const Login = () => {
                 setToken(response.data.token);
                 localStorage.setItem('token', JSON.stringify(response.data.token));
                 setLocalUsername(username);
-                toggleIsLoggedIn();
+                setIsLoggedIn(true)
                 navigate("/home");
             } else {
                 setShowError(true);
+                setIsLoggedIn
             }
         })
         .catch((error: AxiosError) => {
@@ -90,33 +91,41 @@ const Login = () => {
     }
 
     return (
-        <>{!isLoggedIn && <div className={`h-[100vh] w-[100vw] grid ${isMobile ? 'grid-cols-1' : 'grid-cols-3'}`} style={backgroundImageStyle}>
-            <Flex direction="column" gap="4" className='place-self-center'>
-                <img src={logo} className={`${isMobile ? `h-auto w-[70vw]` : `h-auto w-[20vw] ml-10`} place-self-center`} />
-                <Card size="1" className={`${isMobile ? `w-[85vw] h-auto place-self-center` : `w-[30vw] h-auto place-self-center ml-20`} opacity-80 border-1 border-gray-400`}>
-                    <Flex direction="column" gap="8">
-                        <Flex direction="column" gap="6">
-                            <Heading align="center" size="8">Login</Heading>
-                            <TextField.Input placeholder='Username' size="3"
-                                onChange={(event: any) => {
-                                    setUsername(event.target.value);
-                                }} />
-                            <TextField.Input placeholder='Password' size="3"
-                                onChange={(event: any) => {
-                                    setPassword(event.target.value);
-                                }} type="password" />
-                        </Flex>
-                        <Flex direction="column" gap="3">
-                            <Link href='#'>Forgot Password?</Link>
-                            <Button size="4" onClick={loginHandler}>Login</Button>
-                            <Button size="4"><RouterLink to="/signup" className="flex-grow text-center">Already a User? Signup</RouterLink></Button>
-                            <Button size="4" variant="surface"><RouterLink to="/home" className="flex-grow text-center">Continue as Guest</RouterLink></Button>
-                        </Flex>
+        <>{isLoggedIn ? <Navigate to = "/home"/> : <div className={`h-[100vh] w-[100vw] grid ${isMobile ? 'grid-cols-1' : 'grid-cols-3'}`} style={backgroundImageStyle}>
+        <Flex direction="column" gap="4" className='place-self-center'>
+            <img src={logo} className={`${isMobile ? `h-auto w-[70vw]` : `h-auto w-[20vw] ml-10`} place-self-center`} />
+            <Card size="1" className={`${isMobile ? `w-[85vw] h-auto place-self-center` : `w-[30vw] h-auto place-self-center ml-20`} opacity-80 border-1 border-gray-400`}>
+                <Flex direction="column" gap="8">
+                    <Flex direction="column" gap="6">
+                        <Heading align="center" size="8">Login</Heading>
+                        <TextField.Input placeholder='Username' size="3"
+                            onChange={(event: any) => {
+                                setUsername(event.target.value);
+                            }} />
+                        <TextField.Input placeholder='Password' size="3"
+                            onChange={(event: any) => {
+                                setPassword(event.target.value);
+                            }} type="password" />
                     </Flex>
-                </Card>
-            </Flex>
-            <ErrorToast />
-        </div>}</>
+                    <Flex direction="column" gap="3">
+                        <Link href='#'>Forgot Password?</Link>
+                        <Button size="4" onClick={loginHandler}>Login</Button>
+                        <Button size="4" onClick={() => {
+                            navigate("/signup");
+                        }}>Not Registered? Signup</Button>
+                        <Button size="4" variant="surface"
+                        onClick={() => {
+                            setIsLoggedIn(false);
+                            setToken('');
+                            localStorage.removeItem('token');
+                            navigate("/home");
+                        }}>Continue as Guest</Button>
+                    </Flex>
+                </Flex>
+            </Card>
+        </Flex>
+        <ErrorToast />
+    </div>}</>
     );
 };
 
