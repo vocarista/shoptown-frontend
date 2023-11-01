@@ -4,7 +4,7 @@ import { Button, Card, Flex, Heading, Link, TextField } from '@radix-ui/themes';
 import useAuth from '../store/auth';
 import useGeneral from '../store/general';
 import useUser from '../store/user';
-import { Link as RouterLink, useNavigate, Navigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
 import logo from "../assets/logo.png";
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import * as Toast from '@radix-ui/react-toast';
@@ -13,12 +13,11 @@ const Login = () => {
     const isMobile = useGeneral((state: any) => state.isMobile);
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
-    const setIsLoggedIn = useAuth((state: any) => state.setIsLoggedIn);
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(JSON.parse(localStorage.getItem('isLoggedIn') || 'false'));
     const setToken = useAuth((state: any) => state.setToken);
     const base = useAuth((state: any) => state.base);
     const [showError, setShowError] = useState(false);
     const setLocalUsername = useUser((state: any) => state.setUsername);
-    const isLoggedIn = useAuth((state: any) => state.isLoggedIn);
     const navigate = useNavigate();
 
     const backgroundImageStyle = {
@@ -73,6 +72,7 @@ const Login = () => {
             if (response.status === 200) {
                 setToken(response.data.token);
                 localStorage.setItem('token', JSON.stringify(response.data.token));
+                localStorage.setItem('isLoggedIn', JSON.stringify(true));
                 setLocalUsername(username);
                 setIsLoggedIn(true)
                 navigate("/home");
