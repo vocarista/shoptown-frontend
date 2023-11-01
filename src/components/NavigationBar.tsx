@@ -9,7 +9,6 @@ import Form from 'react-bootstrap/Form';
 import { Button } from '@radix-ui/themes';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../store/auth';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import * as Toast from '@radix-ui/react-toast';
 
