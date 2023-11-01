@@ -9,6 +9,7 @@ import Form from 'react-bootstrap/Form';
 import { Button } from '@radix-ui/themes';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../store/auth';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import * as Toast from '@radix-ui/react-toast';
 
@@ -106,14 +107,15 @@ const NavigationBar = () => {
                 </NavDropdown>
               ) : (
                 <NavDropdown title="Account" id="navbarScrollingDropdown">
-                  <NavDropdown.Item href="/login">Login</NavDropdown.Item>
+                  <NavDropdown.Item onClick = {() => {
+                    navigate('/login');
+                  }}>Login</NavDropdown.Item>
                   <NavDropdown.Divider />
-                  <NavDropdown.Item href="/signup">Signup</NavDropdown.Item>
+                  <NavDropdown.Item onClick = {() => {
+                    navigate('/signup');
+                  }}>Signup</NavDropdown.Item>
                 </NavDropdown>
               )}
-              <Nav.Link href="#" disabled>
-                Link
-              </Nav.Link>
             </Nav>
             <Form className="d-flex">
               <Form.Control type="search" placeholder="Search" className="me-2" aria-label="Search" />
