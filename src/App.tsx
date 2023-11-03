@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Route, Routes, Navigate, useNavigate } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import Home from './pages/Home';
 import Cart from './pages/Cart';
 import Login from './pages/Login';

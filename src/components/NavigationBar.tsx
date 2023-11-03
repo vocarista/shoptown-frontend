@@ -4,13 +4,19 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Form from 'react-bootstrap/Form';
-import { Button } from '@radix-ui/themes';
+import { Button, Flex } from '@radix-ui/themes';
 import useAuth from '../store/auth';
 import { Link as RouterLink } from 'react-router-dom';
 import useError from '../store/error';
 import logo from "../assets/logo.png";
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components'
+import cartIcon from "../assets/shopping-cart.png";
+import wishlistIcon from "../assets/wishlist.png"
+import useUser from '../store/user';
+import Badge from 'react-bootstrap/Badge';
+import { useEffect, useState } from 'react';
+import useProducts from '../store/products';
 
 const Link = styled(RouterLink)`
 color: black;
@@ -25,6 +31,13 @@ const NavigationBar = () => {
   const setShowError = useError((state) => state.setShowError);
   const setError = useError((state) => state.setError);
   const navigate = useNavigate();
+
+  const cartCount = useUser((state) => state.cartCount);
+  const wishlistCount = useUser((state) => state.wishlistCount);
+  const setCartList = useUser((state) => state.setCartList);
+  const setWishlist = useUser((state) => state.setWishlist);
+  const setDisplayProducts = useProducts((state) => state.setDisplayProducts);
+  const [keyword, setKeyword] = useState<string>('');
 
   const logoutHandler = async () => {
     try {
@@ -55,6 +68,73 @@ const NavigationBar = () => {
     }
   };
 
+  useEffect(() => {
+    if (isLoggedIn) {
+      async function getCart() {
+        const response = await fetch(`${base}/user/cart`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `"Bearer ${token}"`,
+            'Content-Type': 'application/json',
+          },
+        });
+        if (response.status === 200) {
+          const data = await response.json();
+          setCartList(data);
+        } else {
+          setError('An error occurred. Please try again later.');
+          setShowError(true);
+        }
+      }
+      getCart();
+    }
+  }, [])
+  
+  const searchHandler = () => {
+    async function getSearchedProducts() {
+      const response = await fetch(`${base}/products/search`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ keyword: keyword }),
+      });
+
+      if (response.status === 200) {
+        const data = await response.json();
+        console.log(data);
+        setDisplayProducts(data);
+        navigate('/home');
+      } else {
+        setError('An error occurred. Please try again later.');
+        setShowError(true);
+      }
+    }
+    getSearchedProducts();
+  }
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      async function getWishlist() {
+        const response = await fetch(`${base}/user/wishlist`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `"Bearer ${token}"`,
+            'Content-Type': 'application/json',
+          },
+        });
+        if (response.status === 200) {
+          const data = await response.json();
+          setWishlist(data);
+        } else {
+          setError('An error occurred. Please try again later.');
+          setShowError(true);
+        }
+      }
+      getWishlist();
+    }
+  }, [])
+
   return (
     <>
       <Navbar expand="lg" className="bg-body-tertiary">
@@ -69,6 +149,7 @@ const NavigationBar = () => {
               <Nav.Link href="https://github.com/vocarista/shoptown-frontend" target="_blank">
                 Github
               </Nav.Link>
+              
               {isLoggedIn ? (
                 <NavDropdown title="Account" id="navbarScrollingDropdown">
                   <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
@@ -86,9 +167,17 @@ const NavigationBar = () => {
                 </NavDropdown>
               )}
             </Nav>
+           {isLoggedIn && <Flex gap = "4" className={`${isMobile ? `my-3` : `mx-4` }`}>
+              <Nav.Link href = "/cart" ><Button variant = "ghost" radius='full'><img src = {cartIcon} className = "h-auto w-7"/>
+              <Badge bg = "danger">{cartCount}</Badge></Button></Nav.Link>
+              <Nav.Link><Button variant = "ghost" radius='full'><img src = {wishlistIcon} className = "h-auto w-7"/>
+              <Badge bg = "danger">{wishlistCount}</Badge></Button></Nav.Link>
+              </Flex>}
             <Form className={`d-flex ${isMobile ? `w-[85vw]` : `w-[30vw]` }`}>
-              <Form.Control type="search" placeholder="Search" className="me-2" aria-label="Search" />
-              <Button size="3" variant="outline">
+              <Form.Control type="search" placeholder="Search" className="me-2" aria-label="Search" onChange={(event) => {
+                setKeyword(event.target.value);
+              }}/>
+              <Button size="3" variant="outline" onClick = {searchHandler}>
                 Search
               </Button>
             </Form>
