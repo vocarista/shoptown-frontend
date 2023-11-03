@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Route, Routes, Navigate } from 'react-router-dom';
+import { Route, Routes, Navigate, useNavigate } from 'react-router-dom';
 import Home from './pages/Home';
 import Cart from './pages/Cart';
 import Login from './pages/Login';
@@ -12,39 +12,28 @@ import Profile from './pages/Profile';
 import useGeneral from './store/general';
 import useProducts from './store/products';
 import useAuth from './store/auth';
-import axios, { AxiosError, AxiosResponse } from "axios";
+import ErrorToast from './components/ErrorToast';
 
 function App() {
   const toggleIsMobile = useGeneral((state: any) => state.toggleIsMobile)
   const setAllProducts = useProducts((state: any) => state.setAllProducts)
   const base = useAuth((state: any) => state.base);
-  const setToken = useAuth((state: any) => state.setToken);
-  const setIsLoggedIn = useAuth((state: any) => state.setIsLoggedIn);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      axios.post(`${base}/user/auth/is-token-valid`, {
-        token: token
-      }).then(response => {
-        if (response.data === true) {
-          setToken(token);
-          setIsLoggedIn(true);
+    async function fetchProducts() {
+      const response = await fetch(`${base}/products`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
         }
-      }).catch(err => {
-        console.log(err);
-        setToken('');
-        setIsLoggedIn(false);
       })
+      if (response.status === 200) {
+        const data = await response.json();
+        setAllProducts(data);
+      }
     }
-  }, [])
-
-  useEffect(() => {
-    axios.get(`${base}/products`)
-    .then((response: AxiosResponse) => {
-      setAllProducts(response.data)
-    }).catch((err: AxiosError) => console.log(err));
-  }, [setAllProducts, base]);
+    fetchProducts();
+  })
 
   useEffect(() => {
     const handleResize = () => {
@@ -61,6 +50,7 @@ function App() {
 
   return (
     <div className = "App">
+      <ErrorToast />
       <Routes>
         <Route path = {`/`} element = {<Navigate to = '/home' />} />
         <Route path = {`/home`} element = {<Home />} index/>
