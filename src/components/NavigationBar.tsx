@@ -86,7 +86,7 @@ const NavigationBar = () => {
                 </NavDropdown>
               )}
             </Nav>
-            <Form className="d-flex">
+            <Form className={`d-flex ${isMobile ? `w-[85vw]` : `w-[30vw]` }`}>
               <Form.Control type="search" placeholder="Search" className="me-2" aria-label="Search" />
               <Button size="3" variant="outline">
                 Search

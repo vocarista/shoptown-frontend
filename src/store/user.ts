@@ -1,22 +1,22 @@
 import { create } from 'zustand';
 
 interface UserState {
-    username: string;
-    cart: string[];
-    orders: string[];
-    wishlist: string[];
+    cart: any[];
+    orders: any[];
+    wishlist: any[];
+    cartCount: number;
+    wishlistCount: number;
 }
 
 interface UserActions {
-    setUsername: (newUsername: string) => void;
-    addCartItem: (newItem: string) => void;
-    addOrderItem: (newItem: string) => void;
-    addWishlistItem: (newItem: string) => void;
+    addCartItem: (newItem: any) => void;
+    addOrderItem: (newItem: any) => void;
+    addWishlistItem: (newItem: any) => void;
 }
 
 const useUser = create<UserState & UserActions>((set) => ({
-    username: '',
-    setUsername: (newUsername) => set((state) => ({ ...state, username: newUsername })),
+    wishlistCount: 0,
+    cartCount: 0,
     cart: [],
     addCartItem: (newItem) => set((state) => ({ ...state, cart: [...state.cart, newItem] })),
     orders: [],
