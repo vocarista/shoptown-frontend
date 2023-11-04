@@ -37,11 +37,11 @@ const NavigationBar = () => {
   const setCartList = useUser((state) => state.setCartList);
   const setWishlist = useUser((state) => state.setWishlist);
   const setDisplayProducts = useProducts((state) => state.setDisplayProducts);
+  const resetDisplayProducts = useProducts((state) => state.resetDisplayProducts);
   const [keyword, setKeyword] = useState<string>('');
 
   const logoutHandler = async () => {
-    try {
-      const response = await fetch(`${base}/user/auth/logout`, {
+      await fetch(`${base}/user/auth/logout`, {
         method: 'POST',
         headers: {
           'Authorization': `"Bearer ${token}"`,
@@ -49,23 +49,14 @@ const NavigationBar = () => {
         },
         body: JSON.stringify({ token: token }),
       });
-      if (response.status === 200) {
-        localStorage.removeItem('token');
-        localStorage.removeItem('username');
-        localStorage.removeItem('isLoggedIn');
-        navigate('/home');
-        setError('Logged out successfully');
-        setShowError(true);
-      } else {
-        setError('An error occurred. Please try again later.');
-        setShowError(true);
-      }
 
-      
-    } catch (error) {
-      setError('An error occurred. Please try again later.');
+      localStorage.removeItem('token');
+      localStorage.removeItem('username');
+      localStorage.removeItem('isLoggedIn');
+      navigate('/home');
+      setError('Logged out successfully');
       setShowError(true);
-    }
+      resetDisplayProducts();
   };
 
   useEffect(() => {
@@ -90,7 +81,8 @@ const NavigationBar = () => {
     }
   }, [])
   
-  const searchHandler = () => {
+  const searchHandler = (event: any) => {
+    event.preventDefault(); // Prevent the default form submission behavior
     async function getSearchedProducts() {
       const response = await fetch(`${base}/products/search`, {
         method: 'POST',
@@ -99,19 +91,17 @@ const NavigationBar = () => {
         },
         body: JSON.stringify({ keyword: keyword }),
       });
-
+  
       if (response.status === 200) {
         const data = await response.json();
-        console.log(data);
         setDisplayProducts(data);
-        navigate('/home');
       } else {
         setError('An error occurred. Please try again later.');
         setShowError(true);
       }
     }
     getSearchedProducts();
-  }
+  };
 
   useEffect(() => {
     if (isLoggedIn) {
