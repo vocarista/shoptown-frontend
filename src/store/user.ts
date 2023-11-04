@@ -9,13 +9,29 @@ interface UserState {
 }
 
 interface UserActions {
-    addCartItem: (newItem: any) => void;
-    addOrderItem: (newItem: any) => void;
-    addWishlistItem: (newItem: any) => void;
+    addCartItem: (newItem: CartItem) => void;
+    addOrderItem: (newItem: OrderItem) => void;
+    addWishlistItem: (newItem: WishlistItem) => void;
     setCartList: (newList: any[]) => void;
     setWishlist: (newList: any[]) => void;
 }
 
+interface CartItem {
+    id: string,
+    qty: number,
+}
+
+interface WishlistItem {
+    id: string,
+}
+
+interface OrderItem {
+    id: string,
+    qty: number,
+    orderDate: Date,
+    arrivalDate: Date,
+
+}
 const useUser = create<UserState & UserActions>((set) => ({
     wishlistCount: 0,
     cartCount: 0,
@@ -42,3 +58,4 @@ const useUser = create<UserState & UserActions>((set) => ({
   }));
   
   export default useUser;
+

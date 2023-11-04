@@ -17,6 +17,7 @@ import ErrorToast from './components/ErrorToast';
 function App() {
   const toggleIsMobile = useGeneral((state: any) => state.toggleIsMobile)
   const setAllProducts = useProducts((state: any) => state.setAllProducts)
+  const setDisplayProducts = useProducts((state: any) => state.setDisplayProducts)
   const base = useAuth((state: any) => state.base);
 
   useEffect(() => {
@@ -30,6 +31,7 @@ function App() {
       if (response.status === 200) {
         const data = await response.json();
         setAllProducts(data);
+        setDisplayProducts(data);
       }
     }
     fetchProducts();

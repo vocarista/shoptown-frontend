@@ -26,4 +26,8 @@ body {
     font-size: 14px;
     line-height: 20px;
   }
-  
+
+  .active-page-bg {
+    background-color: mediumaquamarine; /* Change this to your preferred color */
+    color: white; /* Text color for the active page */
+  }
