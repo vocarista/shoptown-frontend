@@ -48,7 +48,10 @@ const SideBar = () => {
                         })
                     }
                 </Form.Select>
-                <Button variant = "soft" size = "3" onClick = {resetDisplayProducts}>Clear Search</Button>
+                <Button variant = "soft" size = "3" onClick = {() => {
+                    setCategory('All Products');
+                    resetDisplayProducts();
+                }}>Clear Search</Button>
                 <Flex direction={`row`} gap = "6" className = "text-xl">
                     Sort By:
                     <Flex gap = "2" className = "place-items-center">

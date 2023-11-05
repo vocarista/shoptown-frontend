@@ -82,7 +82,7 @@ const NavigationBar = () => {
   }, [])
   
   const searchHandler = (event: any) => {
-    event.preventDefault(); // Prevent the default form submission behavior
+    event.preventDefault(); 
     async function getSearchedProducts() {
       const response = await fetch(`${base}/products/search`, {
         method: 'POST',
@@ -134,7 +134,7 @@ const NavigationBar = () => {
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
-            <Nav className="me-auto my-2 my-lg-0" style={{ maxHeight: '300px' }} navbarScroll>
+            <Nav className="me-auto my-2 my-lg-0" style={{ maxHeight: "auto" }} navbarScroll>
               <Nav.Link href="/home">Home</Nav.Link>
               <Nav.Link href="https://github.com/vocarista/shoptown-frontend" target="_blank">
                 Github

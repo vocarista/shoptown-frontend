@@ -1,32 +1,30 @@
 import { create } from 'zustand';
 
 interface UserState {
-    cart: any[];
-    orders: any[];
-    wishlist: any[];
+    cart: CartItem[];
+    orders: OrderItem[];
+    wishlist: WishlistItem[];
     cartCount: number;
     wishlistCount: number;
 }
 
 interface UserActions {
-    addCartItem: (newItem: CartItem) => void;
-    addOrderItem: (newItem: OrderItem) => void;
-    addWishlistItem: (newItem: WishlistItem) => void;
-    setCartList: (newList: any[]) => void;
-    setWishlist: (newList: any[]) => void;
+    setCartList: (newList: CartItem[]) => void;
+    setWishlist: (newList: WishlistItem[]) => void;
+    setOrderList: (newList: OrderItem[]) => void;
 }
 
-interface CartItem {
-    id: string,
+export interface CartItem {
+    productId: string,
     qty: number,
 }
 
-interface WishlistItem {
-    id: string,
+export interface WishlistItem {
+    productId: string,
 }
 
-interface OrderItem {
-    id: string,
+export interface OrderItem {
+    productId: string,
     qty: number,
     orderDate: Date,
     arrivalDate: Date,
@@ -36,11 +34,8 @@ const useUser = create<UserState & UserActions>((set) => ({
     wishlistCount: 0,
     cartCount: 0,
     cart: [],
-    addCartItem: (newItem) => set((state) => ({ ...state, cart: [...state.cart, newItem] })),
-    orders: [],
-    addOrderItem: (newOrder) => set((state) => ({ ...state, orders: [...state.orders, newOrder] })),
     wishlist: [],
-    addWishlistItem: (newItem) => set((state) => ({ ...state, wishList: [...state.wishlist, newItem] })),
+    orders: [],
     setCartList: (newList) => set((state) => {
         let count = 0;
         newList.forEach((item) => {
@@ -49,12 +44,10 @@ const useUser = create<UserState & UserActions>((set) => ({
         return { ...state, cart: newList, cartCount: count };
     }),
     setWishlist: (newList) => set((state) => {
-        let count = 0;
-        newList.forEach((item) => {
-            count += item.qty;
-        });
+        let count = newList.length;
         return { ...state, wishlist: newList, wishlistCount: count };
     }),
+    setOrderList: (newList) => set((state) => ({ ...state, orders: newList }))
   }));
   
   export default useUser;

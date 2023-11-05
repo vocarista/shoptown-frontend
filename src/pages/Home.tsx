@@ -1,4 +1,3 @@
-import React from "react";
 import NavigationBar from "../components/NavigationBar";
 import Bg from "../assets/home-bg.jpg";
 import useGeneral from "../store/general";

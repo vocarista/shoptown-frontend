@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import useGeneral from '../store/general';
 import ProductCard from './ProductCard';
 import useProducts from '../store/products';
 import { Card, Pagination } from 'react-bootstrap';
+import { Text } from '@radix-ui/themes';
 
 const ProductPage = () => {
   const displayProducts = useProducts((state) => state.displayProducts);
@@ -17,8 +18,8 @@ const ProductPage = () => {
   const paginate = (pageNumber: any) => setCurrentPage(pageNumber);
 
   return (
-    <Card className="mr-4 p-3">
-      <div className={`grid grid-cols-1 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 gap-4`}>
+    <Card className={`mr-4 p-3`}>
+        {displayProducts.length > 0 ?<><div className={`grid grid-cols-1 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 gap-4`}>
         {currentProducts.map((product) => (
           <ProductCard key={product.id} data={product} />
         ))}
@@ -41,7 +42,7 @@ const ProductPage = () => {
             ))}
           </Pagination>
         </div>
-      )}
+      )}</> : <Text>Hmmm... We couldn't find any products matching those search terms</Text>}
     </Card>
   );
 };
