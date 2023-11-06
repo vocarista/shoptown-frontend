@@ -1,5 +1,4 @@
 import { Button, Card, Flex, Heading, Strong, Text } from '@radix-ui/themes';
-import wishIcon from '../assets/wishlist.png';
 import useUser from '../store/user';
 import useAlert from '../store/alert';
 import { CartItem, WishlistItem } from '../store/user';
