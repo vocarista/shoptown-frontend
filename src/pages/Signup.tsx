@@ -51,7 +51,7 @@ const Signup = () => {
                     localStorage.setItem('token', data.token);
                     localStorage.setItem('username', username);
                     localStorage.setItem('isLoggedIn', 'true');
-                    navigate('/home');
+                    navigate('/');
                 } else {
                     setShowError(true);
                     setError('An error occurred. Please try again later.');
@@ -64,7 +64,7 @@ const Signup = () => {
     }
 
     return (
-        <>{isLoggedIn ? <Navigate to="/home" /> : (
+        <>{isLoggedIn ? <Navigate to="/" /> : (
             <div className={`h-[100vh] grid ${isMobile ? 'grid-cols-1' : 'grid-cols-3'}`} style={backgroundImageStyle}>
                 <Flex direction="column" gap="4" className='place-self-center'>
                     <img src={logo} className={`${isMobile ? `h-auto w-[70vw]` : `h-auto w-[20vw] ml-10`} place-self-center`} />
@@ -86,7 +86,7 @@ const Signup = () => {
                                     navigate("/login");
                                 }}>Already a user? Login</Button>
                                 <Button size="4" variant="surface" onClick={() => {
-                                    navigate("/home");
+                                    navigate("/");
                                 }}>Continue as Guest</Button>
                             </Flex>
                         </Flex>

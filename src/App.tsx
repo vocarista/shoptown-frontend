@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { Route, Routes, Navigate } from 'react-router-dom';
 import Home from './pages/Home';
 import Cart from './pages/Cart';
 import Login from './pages/Login';
@@ -14,15 +13,15 @@ import useProducts from './store/products';
 import useAuth from './store/auth';
 import AlertToast from './components/AlertToast';
 import useAlert from './store/alert';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
   const toggleIsMobile = useGeneral((state: any) => state.toggleIsMobile)
   const setAllProducts = useProducts((state: any) => state.setAllProducts)
   const setDisplayProducts = useProducts((state: any) => state.setDisplayProducts)
   const base = useAuth((state: any) => state.base);
-  const setAlert = useAlert((state: any) => state.setError);
-  const setShowAlert = useAlert((state: any) => state.setShowError);
+  const setAlert = useAlert((state: any) => state.setAlert);
+  const setShowAlert = useAlert((state: any) => state.setShowAlert);
 
   const token = localStorage.getItem('token');
   
@@ -84,10 +83,9 @@ function App() {
   return (
     <div className = "App">
       <AlertToast />
-      <BrowserRouter>
+      <Router>
       <Routes>
-        <Route path = {`/`} element = {<Navigate to = '/home' />} />
-        <Route path = {`/home`} element = {<Home />} index/>
+        <Route path = {`/`} element = {<Home />}/>
         <Route path = {`/cart`} element = {<Cart />} />
         <Route path = {`/login`} element = {<Login />} />
         <Route path = {`/signup`} element = {<Signup />} />
@@ -97,7 +95,7 @@ function App() {
         <Route path = {`/profile`} element = {<Profile />} />
         <Route path = {`/*`} element = {<NotFound />} />
       </Routes>
-      </BrowserRouter>
+      </Router>
     </div>
   )
 }

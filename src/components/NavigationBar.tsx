@@ -53,7 +53,7 @@ const NavigationBar = () => {
       localStorage.removeItem('token');
       localStorage.removeItem('username');
       localStorage.removeItem('isLoggedIn');
-      navigate('/home');
+      navigate('/');
       setAlert('Logged out successfully');
       setShowAlert(true);
       resetDisplayProducts();
