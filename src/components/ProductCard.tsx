@@ -5,7 +5,7 @@ import useError from '../store/error';
 import { CartItem, WishlistItem } from '../store/user';
 import useAuth from '../store/auth';
 
-interface Product {
+export interface Product {
     _id: string,
     title: string,
     price: number,
@@ -62,7 +62,7 @@ const ProductCard = ({ data }: any) => {
         }
 
         async function addToCart() {
-            const response = await fetch(`${base}/products/add-to-cart`, {
+            const response = await fetch(`${base}/user/cart/add-to-cart`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -105,7 +105,7 @@ const ProductCard = ({ data }: any) => {
         }
 
         async function addToWishlist() {
-            const response = await fetch(`${base}/products/add-to-wishlist`, {
+            const response = await fetch(`${base}/user/wishlist/add-to-wishlist`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
