@@ -1,9 +1,11 @@
 import { Button, Card, Flex, Heading, Strong, Text } from '@radix-ui/themes';
 import wishIcon from '../assets/wishlist.png';
 import useUser from '../store/user';
-import useError from '../store/error';
+import useAlert from '../store/alert';
 import { CartItem, WishlistItem } from '../store/user';
 import useAuth from '../store/auth';
+import { HeartFilledIcon, HeartIcon } from '@radix-ui/react-icons'
+import { useState } from 'react'; 
 
 export interface Product {
     _id: string,
@@ -27,6 +29,9 @@ const categories: any = {
 
 const ProductCard = ({ data }: any) => {
     const {_id, title, price, description, category, image, rating }: Product = data;
+    let wishlistItem: WishlistItem = {
+        productId: _id,
+    }
 
     const base = useAuth((state: any) => state.base);
     const setWishlist = useUser((state: any) => state.setWishlist);
@@ -35,8 +40,10 @@ const ProductCard = ({ data }: any) => {
     const wishlist: WishlistItem[] = useUser((state: any) => state.wishlist);
     const token = localStorage.getItem('token');
     const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-    const setError = useError((state: any) => state.setError);
-    const setShowError = useError((state: any) => state.setShowError);
+    const setAlert = useAlert((state: any) => state.setAlert);
+    const setShowAlert = useAlert((state: any) => state.setShowAlert);
+
+    const [isWishlisted, setIsWishlisted] = useState<boolean>(wishlist.includes(wishlistItem));
 
     const cartHandler = () => {
         let cartItem: CartItem
@@ -73,38 +80,43 @@ const ProductCard = ({ data }: any) => {
 
             if (response.status === 200) {
                 setCartList(newCart);
+                setAlert('Added to cart');
+                setShowAlert(true);
             } else {
                 console.log('error');
-                setError('An error occurred. Please try again later.');
-                setShowError(true);
+                setAlert('An error occurred. Please try again later.');
+                setShowAlert(true);
             }
         }
         addToCart();
     }
 
     const wishlistHandler = () => {
-        let wishlistItem: WishlistItem 
-        let hasItem: boolean = false;
-        const newWishlist = wishlist.map((item: WishlistItem) => {
-            if (item.productId === _id) {
-                hasItem = true;
-                wishlistItem = {
-                    productId: _id,
+        const newWishlist = wishlist.filter((item: WishlistItem) => item.productId !== _id);
+        if (isWishlisted) {
+            async function removeFromWishlist() {
+                const response = await fetch(`${base}/user/wishlist/remove`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `"Bearer ${token}"`,
+                    },
+                    body: JSON.stringify(wishlistItem)
+                });
+
+                if (response.status === 200) {
+                    setWishlist(newWishlist);
+                    setAlert('Removed from wishlist');
+                    setShowAlert(true);
+                } else {
+                    setAlert('An error occurred. Please try again later.');
+                    setShowAlert(true);
                 }
-                return wishlistItem;
-            } else {
-                return item;
             }
-        });
-
-        if (!hasItem) {
-            wishlistItem = {
-                productId: _id,
-            }
-            newWishlist.push(wishlistItem);
-        }
-
-        async function addToWishlist() {
+            removeFromWishlist();
+        } else {
+            const newWishlist = [...wishlist, wishlistItem];
+            async function addToWishlist() {
             const response = await fetch(`${base}/user/wishlist/add-to-wishlist`, {
                 method: 'POST',
                 headers: {
@@ -116,12 +128,16 @@ const ProductCard = ({ data }: any) => {
 
             if (response.status === 200) {
                 setWishlist(newWishlist);
+                setAlert('Added to wishlist');
+                setShowAlert(true);
             } else {
-                setError('An error occurred. Please try again later.');
-                setShowError(true);
+                setAlert('An error occurred. Please try again later.');
+                setShowAlert(true);
             }
+            }
+            addToWishlist();
+            setIsWishlisted(true);
         }
-        addToWishlist();
     }
 
     return (
@@ -140,8 +156,8 @@ const ProductCard = ({ data }: any) => {
                         if (isLoggedIn) {
                             cartHandler();
                         } else {
-                            setError('Please login to add items to cart');
-                            setShowError(true);
+                            setAlert('Please login to add items to cart');
+                            setShowAlert(true);
                         }
                     }}>Add to Cart</Button>
                     <Button variant = "outline" size = "3">View Details</Button>
@@ -149,10 +165,10 @@ const ProductCard = ({ data }: any) => {
                         if (isLoggedIn) {
                             wishlistHandler();
                         } else {
-                            setError('Please login to add items to wishlist');
-                            setShowError(true);
+                            setAlert('Please login to add items to wishlist');
+                            setShowAlert(true);
                         }
-                    }}><img src = {wishIcon} className = "h-auto w-7" /></Button>
+                    }}>{isWishlisted ? <HeartFilledIcon className="h-auto w-7" /> : <HeartIcon className = "h-auto w-7" />}</Button>
                 </Flex>
             </Flex>
         </Card>

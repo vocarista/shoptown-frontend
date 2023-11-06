@@ -7,7 +7,7 @@ import Form from 'react-bootstrap/Form';
 import { Button, Flex } from '@radix-ui/themes';
 import useAuth from '../store/auth';
 import { Link as RouterLink } from 'react-router-dom';
-import useError from '../store/error';
+import useAlert from '../store/alert';
 import logo from "../assets/logo.png";
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components'
@@ -28,8 +28,8 @@ const NavigationBar = () => {
   const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
   const token = localStorage.getItem('token');
   const base = useAuth((state) => state.base);
-  const setShowError = useError((state) => state.setShowError);
-  const setError = useError((state) => state.setError);
+  const setShowAlert = useAlert((state) => state.setShowAlert);
+  const setAlert = useAlert((state) => state.setAlert);
   const navigate = useNavigate();
 
   const cartCount = useUser((state) => state.cartCount);
@@ -54,8 +54,8 @@ const NavigationBar = () => {
       localStorage.removeItem('username');
       localStorage.removeItem('isLoggedIn');
       navigate('/home');
-      setError('Logged out successfully');
-      setShowError(true);
+      setAlert('Logged out successfully');
+      setShowAlert(true);
       resetDisplayProducts();
   };
 
@@ -73,8 +73,8 @@ const NavigationBar = () => {
           const data = await response.json();
           setCartList(data);
         } else {
-          setError('An error occurred. Please try again later.');
-          setShowError(true);
+          setAlert('An error occurred. Please try again later.');
+          setShowAlert(true);
         }
       }
       getCart();
@@ -96,8 +96,8 @@ const NavigationBar = () => {
         const data = await response.json();
         setDisplayProducts(data);
       } else {
-        setError('An error occurred. Please try again later.');
-        setShowError(true);
+        setAlert('An error occurred. Please try again later.');
+        setShowAlert(true);
       }
     }
     getSearchedProducts();
@@ -117,8 +117,8 @@ const NavigationBar = () => {
           const data = await response.json();
           setWishlist(data);
         } else {
-          setError('An error occurred. Please try again later.');
-          setShowError(true);
+          setAlert('An error occurred. Please try again later.');
+          setShowAlert(true);
         }
       }
       getWishlist();

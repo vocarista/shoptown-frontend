@@ -17,11 +17,11 @@ const Home = () => {
   const isMobile = useGeneral((state) => state.isMobile);
 
   return (
-    <Flex style={backgroundImageStyle} className="w-screen h-auto" gap="2" direction="column">
+<Flex style={backgroundImageStyle} className={`w-[100vw]`} gap="2" direction="column">
       <NavigationBar />
-      <div style={backgroundImageStyle} className={`flex ${isMobile ? "place-items-center flex-col" : "place-items-start p-2 flex-row"} h-[120vh] gap-4 pl-4`}>
+      <div style={backgroundImageStyle} className={`flex ${isMobile ? "place-items-center flex-col h-[120vh]" : "place-items-start p-2 flex-row"} gap-4 pl-4`}>
         <SideBar />
-        <ScrollArea size={"2"} className = {`place-items-center w-auto h-screen`} scrollbars="vertical" type="auto"><ProductPage /></ScrollArea>
+        <ScrollArea size={"2"} className = {`place-items-center w-auto`} scrollbars="vertical" type="auto"><ProductPage /></ScrollArea>
       </div>
     </Flex>
   );

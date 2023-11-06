@@ -5,7 +5,7 @@ import useAuth from '../store/auth';
 import useGeneral from '../store/general';
 import { useNavigate, Navigate } from 'react-router-dom';
 import logo from "../assets/logo.png";
-import useError from '../store/error';
+import useAlert from '../store/alert';
 
 
 const Login = () => {
@@ -14,8 +14,8 @@ const Login = () => {
     const [password, setPassword] = useState<string>('');
     const base = useAuth((state: any) => state.base);
     const navigate = useNavigate();
-    const setError = useError((state: any) => state.setError);
-    const setShowError = useError((state: any) => state.setShowError);
+    const setAlert = useAlert((state: any) => state.setError);
+    const setShowAlert = useAlert((state: any) => state.setShowError);
     const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
 
     const backgroundImageStyle = {
@@ -41,8 +41,8 @@ const Login = () => {
             localStorage.setItem('isLoggedIn', 'true');
             navigate('/home');
         } else {
-            setShowError(true);
-            setError('Invalid username or password');
+            setShowAlert(true);
+            setAlert('Invalid username or password');
         }
     }
 

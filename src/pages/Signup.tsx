@@ -5,7 +5,7 @@ import useAuth from '../store/auth';
 import useGeneral from '../store/general';
 import { useNavigate, Navigate } from 'react-router-dom';
 import logo from "../assets/logo.png";
-import useError from '../store/error';
+import useError from '../store/alert';
 
 const Signup = () => {
     const isMobile = useGeneral((state: any) => state.isMobile);

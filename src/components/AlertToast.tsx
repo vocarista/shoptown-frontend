@@ -1,24 +1,24 @@
 import { useEffect, useRef } from 'react';
 import * as Toast from '@radix-ui/react-toast';
-import useError from '../store/error';
+import useAlert from '../store/alert';
 
-const ErrorToast = () => {
+const MessageToast = () => {
     const eventDateRef = useRef(new Date());
     const timerRef = useRef(0);
-    const showError = useError((state: any) => state.showError);
-    const setShowError = useError((state: any) => state.setShowError);
-    const error = useError((state: any) => state.error);
+    const showAlert = useAlert((state: any) => state.showAlert);
+    const setShowAlert = useAlert((state: any) => state.setShowAlert);
+    const alert = useAlert((state: any) => state.alert);
 
     useEffect(() => {
         return () => clearTimeout(timerRef.current);
-    }, [showError]);
+    }, [showAlert]);
 
     return (
         <Toast.Provider swipeDirection="right">
             <Toast.Root
                 className="bg-white opacity-95 rounded-md shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] p-[15px] grid [grid-template-areas:_'title_action'_'description_action'] grid-cols-[auto_max-content] gap-x-[15px] items-center data-[state=open]:animate-slideIn data-[state=closed]:animate-hide data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[swipe=cancel]:translate-x-0 data-[swipe=cancel]:transition-[transform_200ms_ease-out] data-[swipe=end]:animate-swipeOut"
-                open={showError}
-                onOpenChange={setShowError}
+                open={showAlert}
+                onOpenChange={setShowAlert}
             >
                 <Toast.Title className="[grid-area:_title] mb-[5px] font-medium text-slate12 text-[15px]">
                     Alert
@@ -28,7 +28,7 @@ const ErrorToast = () => {
                         className="[grid-area:_description] m-0 text-slate11 text-[13px] leading-[1.3]"
                         dateTime={eventDateRef.current.toISOString()}
                     >
-                        { error }
+                        { alert }
                     </time>
                 </Toast.Description>
                 <Toast.Action className="[grid-area:_action]" asChild altText="Goto schedule to undo">
@@ -42,4 +42,4 @@ const ErrorToast = () => {
     );
 };
 
-export default ErrorToast;
+export default MessageToast;
