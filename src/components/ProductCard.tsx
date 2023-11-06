@@ -3,6 +3,7 @@ import wishIcon from '../assets/wishlist.png';
 import useUser from '../store/user';
 import useError from '../store/error';
 import { CartItem, WishlistItem } from '../store/user';
+import useAuth from '../store/auth';
 
 interface Product {
     _id: string,
@@ -27,7 +28,7 @@ const categories: any = {
 const ProductCard = ({ data }: any) => {
     const {_id, title, price, description, category, image, rating }: Product = data;
 
-    const base = `https://api.shoptown.vocarista.com`;
+    const base = useAuth((state: any) => state.base);
     const setWishlist = useUser((state: any) => state.setWishlist);
     const setCartList = useUser((state: any) => state.setCartList);
     const cart: CartItem[] = useUser((state: any) => state.cart);
