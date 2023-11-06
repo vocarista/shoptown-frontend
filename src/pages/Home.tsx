@@ -1,17 +1,9 @@
 import NavigationBar from "../components/NavigationBar";
-import Cart from './Cart';
-import Login from './Login';
-import Signup from './Signup';
-import Confirmed from './Confirmed';
-import Checkout from './Checkout';
-import Orders from './Orders';
-import Profile from './Profile';
 import Bg from "../assets/home-bg.jpg";
 import useGeneral from "../store/general";
 import { Flex, ScrollArea } from "@radix-ui/themes";
 import SideBar from "../components/SideBar";
 import ProductPage from "../components/ProductPage";
-import { Routes, Route } from "react-router-dom";
 
 const backgroundImageStyle = {
   backgroundImage: `url(${Bg})`,
