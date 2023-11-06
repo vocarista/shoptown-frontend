@@ -1,9 +1,17 @@
 import NavigationBar from "../components/NavigationBar";
+import Cart from './Cart';
+import Login from './Login';
+import Signup from './Signup';
+import Confirmed from './Confirmed';
+import Checkout from './Checkout';
+import Orders from './Orders';
+import Profile from './Profile';
 import Bg from "../assets/home-bg.jpg";
 import useGeneral from "../store/general";
 import { Flex, ScrollArea } from "@radix-ui/themes";
 import SideBar from "../components/SideBar";
 import ProductPage from "../components/ProductPage";
+import { Routes, Route } from "react-router-dom";
 
 const backgroundImageStyle = {
   backgroundImage: `url(${Bg})`,
@@ -23,6 +31,16 @@ const Home = () => {
         <SideBar />
         <ScrollArea size={"2"} className = {`place-items-center w-auto`} scrollbars="vertical" type="auto"><ProductPage /></ScrollArea>
       </div>
+
+      <Routes>
+      <Route path = {`/cart`} element = {<Cart />} />
+        <Route path = {`/login`} element = {<Login />} />
+        <Route path = {`/signup`} element = {<Signup />} />
+        <Route path = {`/confirm`} element = {<Confirmed />} />
+        <Route path = {`/checkout`} element = {<Checkout />} />
+        <Route path = {`/orders`} element = {<Orders />} />
+        <Route path = {`/profile`} element = {<Profile />} />
+      </Routes>
     </Flex>
   );
 };
