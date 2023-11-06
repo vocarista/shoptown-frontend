@@ -84,18 +84,18 @@ function App() {
     <div className = "App">
       <AlertToast />
       <Router>
-      <Routes>
-        <Route path = {`*`} element = {<App />} />
-        <Route path = {`/`} element = {<Home />} />
-        <Route path = {`/cart`} element = {<Cart />} />
-        <Route path = {`/login`} element = {<Login />} />
-        <Route path = {`/signup`} element = {<Signup />} />
-        <Route path = {`/confirm`} element = {<Confirmed />} />
-        <Route path = {`/checkout`} element = {<Checkout />} />
-        <Route path = {`/orders`} element = {<Orders />} />
-        <Route path = {`/profile`} element = {<Profile />} />
-        <Route path = {`/*`} element = {<NotFound />} />
-      </Routes>
+        <Routes>
+          <Route path="*" element={<App />} index />
+          <Route path="/" element={<Home />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/confirm" element={<Confirmed />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/orders" element={<Orders />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
       </Router>
     </div>
   )
