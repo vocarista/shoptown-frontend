@@ -31,16 +31,6 @@ const Home = () => {
         <SideBar />
         <ScrollArea size={"2"} className = {`place-items-center w-auto`} scrollbars="vertical" type="auto"><ProductPage /></ScrollArea>
       </div>
-
-      <Routes>
-      <Route path = {`/cart`} element = {<Cart />} />
-        <Route path = {`/login`} element = {<Login />} />
-        <Route path = {`/signup`} element = {<Signup />} />
-        <Route path = {`/confirm`} element = {<Confirmed />} />
-        <Route path = {`/checkout`} element = {<Checkout />} />
-        <Route path = {`/orders`} element = {<Orders />} />
-        <Route path = {`/profile`} element = {<Profile />} />
-      </Routes>
     </Flex>
   );
 };

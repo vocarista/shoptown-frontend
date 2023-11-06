@@ -1,6 +1,12 @@
 import { useEffect } from 'react';
 import Home from './pages/Home';
-
+import Cart from './pages/Cart';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import Confirmed from './pages/Confirmed';
+import Checkout from './pages/Checkout';
+import Orders from './pages/Orders';
+import Profile from './pages/Profile';
 import NotFound from './pages/NotFound';
 import useGeneral from './store/general';
 import useProducts from './store/products';
@@ -80,7 +86,14 @@ function App() {
       <Router>
       <Routes>
         <Route path = {`*`} element = {<App />}></Route>
-        <Route path = {`/`} element = {<Home />}/>
+        <Route path = {`/`} element = {<Home />} />
+        <Route path = {`/cart`} element = {<Cart />} />
+        <Route path = {`/login`} element = {<Login />} />
+        <Route path = {`/signup`} element = {<Signup />} />
+        <Route path = {`/confirm`} element = {<Confirmed />} />
+        <Route path = {`/checkout`} element = {<Checkout />} />
+        <Route path = {`/orders`} element = {<Orders />} />
+        <Route path = {`/profile`} element = {<Profile />} />
         <Route path = {`/*`} element = {<NotFound />} />
       </Routes>
       </Router>
