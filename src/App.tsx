@@ -13,7 +13,7 @@ import useProducts from './store/products';
 import useAuth from './store/auth';
 import AlertToast from './components/AlertToast';
 import useAlert from './store/alert';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
   const toggleIsMobile = useGeneral((state: any) => state.toggleIsMobile)
@@ -94,7 +94,7 @@ function App() {
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="*" element={<NotFound />} />
+          <Route path="/*" element={<NotFound />} />
         </Routes>
       </Router>
     </div>
