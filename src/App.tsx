@@ -85,7 +85,7 @@ function App() {
       <AlertToast />
       <Router>
       <Routes>
-        <Route path = {`*`} element = {<App />}></Route>
+        <Route path = {`*`} element = {<App />} />
         <Route path = {`/`} element = {<Home />} />
         <Route path = {`/cart`} element = {<Cart />} />
         <Route path = {`/login`} element = {<Login />} />
