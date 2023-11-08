@@ -5,7 +5,7 @@ import useAuth from '../store/auth';
 import useGeneral from '../store/general';
 import { useNavigate, Navigate } from 'react-router-dom';
 import logo from "../assets/logo.png";
-import useError from '../store/alert';
+import useAlert from '../store/alert';
 
 const Signup = () => {
     const isMobile = useGeneral((state: any) => state.isMobile);
@@ -15,8 +15,8 @@ const Signup = () => {
     const [lastName, setLastName] = useState<string>('');
     const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
     const base = useAuth((state: any) => state.base);
-    const setShowError = useError((state: any) => state.setShowError);
-    const setError = useError((state: any) => state.setError);
+    const setShowAlert = useAlert((state: any) => state.setShowAlert);
+    const setAlert = useAlert((state: any) => state.setAlert);
     const navigate = useNavigate();
     const [isUsernameAvailable, setIsUsernameAvailable] = useState<boolean>(false);
 
@@ -53,12 +53,12 @@ const Signup = () => {
                     localStorage.setItem('isLoggedIn', 'true');
                     navigate('/');
                 } else {
-                    setShowError(true);
-                    setError('An error occurred. Please try again later.');
+                    setShowAlert(true);
+                    setAlert('An error occurred. Please try again later.');
                 }
             } else {
-                setShowError(true);
-                setError('Username is not available');
+                setShowAlert(true);
+                setAlert('Username is not available');
             }
         }
     }

@@ -129,13 +129,13 @@ const NavigationBar = () => {
     <>
       <Navbar expand="lg" className="bg-body-tertiary">
         <Container fluid>
-          <Navbar.Brand href="#">
+          <Navbar.Brand href="/">
             <img src= {logo} className={`${isMobile ? 'w-[30vw]' : 'w-[10vw]'}`} />
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav className="me-auto my-2 my-lg-0" style={{ maxHeight: "auto" }} navbarScroll>
-              <Nav.Link href="/home">Home</Nav.Link>
+              <Nav.Link href="/">Home</Nav.Link>
               <Nav.Link href="https://github.com/vocarista/shoptown-frontend" target="_blank">
                 Github
               </Nav.Link>
@@ -158,8 +158,8 @@ const NavigationBar = () => {
               )}
             </Nav>
            {isLoggedIn && <Flex gap = "4" className={`${isMobile ? `my-3` : `mx-4` }`}>
-              <Nav.Link href = "/cart" ><Button variant = "ghost" radius='full'><img src = {cartIcon} className = "h-auto w-7"/>
-              <Badge bg = "danger">{cartCount}</Badge></Button></Nav.Link>
+              <Nav.Link><RouterLink to = "/cart"><Button variant = "ghost" radius='full'><img src = {cartIcon} className = "h-auto w-7"/>
+              <Badge bg = "danger">{cartCount}</Badge></Button></RouterLink></Nav.Link>
               <Nav.Link><Button variant = "ghost" radius='full'><img src = {wishlistIcon} className = "h-auto w-7"/>
               <Badge bg = "danger">{wishlistCount}</Badge></Button></Nav.Link>
               </Flex>}
