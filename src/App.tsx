@@ -3,7 +3,6 @@ import Home from './pages/Home';
 import Cart from './pages/Cart';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import Confirmed from './pages/Confirmed';
 import Checkout from './pages/Checkout';
 import Orders from './pages/Orders';
 import Profile from './pages/Profile';
@@ -36,19 +35,19 @@ function App() {
         },
         body: JSON.stringify({ token: token })
       })
-      const data = await response.json();
+      const data = await response.text();
 
-      if (response.status === 200 && data == true) {
+      if (response.status === 200 && data === 'true') {
         localStorage.setItem('isLoggedIn', 'true');
       } else {
         localStorage.setItem('isLoggedIn', 'false');
         localStorage.removeItem('token');
         setAlert('Session expired. Please login again.');
         setShowAlert(true);
-      }
+      }``
     }
     validateToken();
-  })
+  }, [])
 
   useEffect(() => {
     async function fetchProducts() {
@@ -65,7 +64,7 @@ function App() {
       }
     }
     fetchProducts();
-  })
+  }, [])
 
   useEffect(() => {
     const handleResize = () => {
@@ -85,12 +84,11 @@ function App() {
       <AlertToast />
       <Router>
         <Routes>
-          <Route path="*" element={<App />} index />
+          {/* <Route path="*" element={<App />} index /> */}
           <Route path="/" element={<Home />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/confirm" element={<Confirmed />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/profile" element={<Profile />} />

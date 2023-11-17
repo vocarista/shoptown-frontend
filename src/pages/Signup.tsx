@@ -35,7 +35,8 @@ const Signup = () => {
         })
 
         if (checkResponse.status === 200) {
-            setIsUsernameAvailable((await checkResponse.json()));
+            const isAvailable = await checkResponse.text()
+            setIsUsernameAvailable(isAvailable === 'true');
 
             if (isUsernameAvailable) {
                 const response = await fetch(`${base}/user/auth/register`, {

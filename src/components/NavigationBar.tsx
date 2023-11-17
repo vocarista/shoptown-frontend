@@ -127,7 +127,7 @@ const NavigationBar = () => {
 
   return (
     <>
-      <Navbar expand="lg" className="bg-body-tertiary">
+      <Navbar expand="lg" className="bg-body-tertiary w-screen">
         <Container fluid>
           <Navbar.Brand href="/">
             <img src= {logo} className={`${isMobile ? 'w-[30vw]' : 'w-[10vw]'}`} />

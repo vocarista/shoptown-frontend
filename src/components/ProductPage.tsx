@@ -42,7 +42,7 @@ const ProductPage = () => {
             ))}
           </Pagination>
         </div>
-      )}</> : <Text>Hmmm... We couldn't find any products matching those search terms</Text>}
+      )}</> : <Text className = "text-xl">Hmmm... We couldn't find any products</Text>}
     </Card>
   );
 };

@@ -9,6 +9,7 @@ import useAlert from '../store/alert';
 import { InfoCircledIcon } from '@radix-ui/react-icons';
 import useUser from '../store/user';
 import useAuth from '../store/auth';
+import { useNavigate } from 'react-router';
 
 const backgroundImageStyle = {
     backgroundImage: `url(${Bg})`,
@@ -21,6 +22,9 @@ const Checkout = () => {
     const isMobile = useGeneral((state) => state.isMobile);
     const setAlert = useAlert((state) => state.setAlert);
     const setShowAlert = useAlert((state) => state.setShowAlert);
+    const base = useAuth((state: any) => state.base);
+    const navigate = useNavigate();
+    const token = localStorage.getItem('token');
 
     const [country, setCountry] = useState<string>('');
     const [fullName, setFullName] = useState<string>('');
@@ -190,10 +194,6 @@ const Checkout = () => {
     }
 
     const orderHandler = async () => {
-        const token = localStorage.getItem('token');
-        const base = useAuth((state: any) => state.base);
-
-        // Updating address
 
         try {
             const response = await fetch(`${base}/user/address/add-shipping-address`, {
@@ -243,9 +243,24 @@ const Checkout = () => {
                 })
 
                 const allOrders = [...orders, ...newOrders];
-                setOrderList(allOrders);
-                setCartList([]);
-                setCartItems([]);
+                const cartResponse = await fetch(`${base}/user/cart/empty`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `"Bearer ${token}"`,
+                    }
+                });
+
+                if (cartResponse.status === 204) {
+                    setOrderList(allOrders);
+                    setCartList([]);
+                    setCartItems([]);
+                    setAlert('Order placed successfully');
+                    setShowAlert(true);
+                    navigate('/');
+                } else {
+                    throw new Error('Error emptying cart');
+                }
             } else {
                 throw new Error('Error adding address');
             }
