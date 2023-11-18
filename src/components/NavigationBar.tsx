@@ -142,7 +142,7 @@ const NavigationBar = () => {
               
               {isLoggedIn ? (
                 <NavDropdown title="Account" id="navbarScrollingDropdown">
-                  <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
+                  <NavDropdown.Item><Link to = "/profile">Profile</Link></NavDropdown.Item>
                   <NavDropdown.Item href="/orders">Orders</NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item onClick={logoutHandler}>

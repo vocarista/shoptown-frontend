@@ -14,8 +14,8 @@ const Login = () => {
     const [password, setPassword] = useState<string>('');
     const base = useAuth((state: any) => state.base);
     const navigate = useNavigate();
-    const setAlert = useAlert((state: any) => state.setError);
-    const setShowAlert = useAlert((state: any) => state.setShowError);
+    const setAlert = useAlert((state: any) => state.setAlert);
+    const setShowAlert = useAlert((state: any) => state.setShowAlert);
     const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
 
     const backgroundImageStyle = {
@@ -41,8 +41,8 @@ const Login = () => {
             localStorage.setItem('isLoggedIn', 'true');
             navigate('/');
         } else {
-            setShowAlert(true);
             setAlert('Invalid username or password');
+            setShowAlert(true);
         }
     }
 

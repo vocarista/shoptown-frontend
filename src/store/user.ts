@@ -23,6 +23,37 @@ export interface CartItem {
     qty: number,
 }
 
+export interface User {
+    _id: string;
+    firstname: string;
+    lastname: string;
+    username: string;
+    password: string;
+    wishlist: WishlistItem[];
+    orderlist: OrderItem[];
+    cartlist: CartItem[];
+    role: string;
+    email: string;
+    phone: string;
+    dob: Date;
+    shippingList: Address[];
+    billingAddress: Address;
+}
+
+export interface Address {
+    country: string;
+    fullName: string;
+    mobileNumber: string;
+    pincode: string;
+    houseNumber: string;
+    street: string;
+    area: string;
+    city: string;
+    state: string;
+    landmark: string;
+    defaultAddress: boolean;
+}
+
 export interface WishlistItem {
     productId: string,
 }
