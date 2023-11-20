@@ -14,7 +14,7 @@ interface SetAuth {
 const useAuth = create<Auth & SetAuth>((set) => ({
     token: localStorage.getItem('token') || '',
     isLoggedIn: localStorage.getItem('isLoggedIn') === 'true', // Store as a string and convert to boolean
-    base: `http://localhost:8080`,
+    base: `https://api.shoptown.vocarista.com`,
     setToken: (newToken) => set((state) => {
         localStorage.setItem('token', newToken);
         localStorage.setItem('isLoggedIn', 'true');
