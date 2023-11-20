@@ -76,7 +76,7 @@ const Profile = () => {
                 'Content-Type': 'application/json',
                 'Authorization': `"Bearer ${token}"`,
             },
-            body: value
+            body: JSON.stringify(value)
         });
 
         if (response.status === 200) {
@@ -350,7 +350,7 @@ const Profile = () => {
                                                         <TextField.Input
                                                             placeholder="Date of Birth"
                                                             type="date"
-                                                            defaultValue={user?.dob}
+                                                            defaultValue={user?.dob || 'yyyy-mm-dd'}
                                                             onChange={(e) => {
                                                                 setUser((oldUser: User) => ({ ...oldUser, dob: e.target.value }));
                                                             }}

@@ -58,7 +58,7 @@ const Cart = () => {
     }, [])
 
     return (
-        <div style={backgroundImageStyle} className = "pb-10 h-screen place-items-center flex flex-col"><NavigationBar />
+        <div style={backgroundImageStyle} className = "pb-10 h-auto min-h-screen place-items-center flex flex-col"><NavigationBar />
           {cart.length === 0 && isLoggedIn ? 
           <Card className = "text-2xl font-extralight w-[80vw] mt-10 flex flex-col place-items-center text-center"><Flex direction={`column`}>
             Hmmm... seems like there's nothing here.
