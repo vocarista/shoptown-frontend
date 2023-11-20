@@ -18,7 +18,7 @@ const Signup = () => {
     const setShowAlert = useAlert((state: any) => state.setShowAlert);
     const setAlert = useAlert((state: any) => state.setAlert);
     const navigate = useNavigate();
-    const [isUsernameAvailable, setIsUsernameAvailable] = useState<boolean>(false);
+    // const [isUsernameAvailable, setIsUsernameAvailable] = useState<boolean>(false);
 
     const backgroundImageStyle = {
         backgroundImage: `url(${authBg})`,
@@ -31,12 +31,12 @@ const Signup = () => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ username: username })
+            body: JSON.stringify(username)
         })
 
         if (checkResponse.status === 200) {
             const isAvailable = await checkResponse.text()
-            setIsUsernameAvailable(isAvailable === 'true');
+            let isUsernameAvailable: boolean = isAvailable === 'true';
 
             if (isUsernameAvailable) {
                 const response = await fetch(`${base}/user/auth/register`, {

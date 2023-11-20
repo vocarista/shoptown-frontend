@@ -95,6 +95,7 @@ const NavigationBar = () => {
       if (response.status === 200) {
         const data = await response.json();
         setDisplayProducts(data);
+        navigate('/');
       } else {
         setAlert('An error occurred. Please try again later.');
         setShowAlert(true);

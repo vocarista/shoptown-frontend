@@ -17,7 +17,7 @@ const Home = () => {
   const isMobile = useGeneral((state) => state.isMobile);
 
   return (
-<Flex style={backgroundImageStyle} className={`${isMobile ? `w-screen` : ``}`} gap="2" direction="column">
+<Flex style={backgroundImageStyle} className={`${isMobile ? `w-screen` : ``} pb-5`} gap="2" direction="column">
       <NavigationBar />
       <div style={backgroundImageStyle} className={`flex ${isMobile ? "place-items-center flex-col h-[120vh]" : "place-items-start p-2 flex-row"} gap-4 pl-4`}>
         <SideBar />
