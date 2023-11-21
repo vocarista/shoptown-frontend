@@ -140,7 +140,7 @@ const ProductCard = ({ data }: any) => {
     }
 
     return (
-        <Card className = {`h-auto w-[320px]`}>
+        <Card className = {`h-auto w-[320px] shadow-sm shadow-gray-800`}>
             <Flex direction={`column`} gap = "2">
                 <Flex direction={`column`} className = "place-items-center">
                     <img src={image} className={`h-[300px] place-self-center`} />

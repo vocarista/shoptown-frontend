@@ -159,10 +159,10 @@ const NavigationBar = () => {
               )}
             </Nav>
            {isLoggedIn && <Flex gap = "4" className={`${isMobile ? `my-3` : `mx-4` }`}>
-              <Nav.Link><RouterLink to = "/cart"><Button variant = "ghost" radius='full'><img src = {cartIcon} className = "h-auto w-7"/>
-              <Badge bg = "danger">{cartCount}</Badge></Button></RouterLink></Nav.Link>
-              <Nav.Link><Button variant = "ghost" radius='full'><img src = {wishlistIcon} className = "h-auto w-7"/>
-              <Badge bg = "danger">{wishlistCount}</Badge></Button></Nav.Link>
+              <Nav.Link><Link to = "/cart"><Button variant = "ghost" radius='full'><img src = {cartIcon} className = "h-auto w-7"/>
+              <Badge bg = "danger">{cartCount}</Badge></Button></Link></Nav.Link>
+              <Nav.Link><Link to = "/wishlist"><Button variant = "ghost" radius='full'><img src = {wishlistIcon} className = "h-auto w-7"/>
+              <Badge bg = "danger">{wishlistCount}</Badge></Button></Link></Nav.Link>
               </Flex>}
             <Form className={`d-flex ${isMobile ? `w-[85vw]` : `w-[30vw]` }`}>
               <Form.Control type="search" placeholder="Search" className="me-2" aria-label="Search" onChange={(event) => {

@@ -12,6 +12,7 @@ import { CartProduct } from '../components/CartCard';
 import Bg from  '../assets/home-bg.jpg'
 // import useAlert from '../store/alert';
 import { Link } from 'react-router-dom';
+import Footer from '../components/Footer';
 
 
 const backgroundImageStyle = {
@@ -84,6 +85,7 @@ const Cart = () => {
            </Flex>
            </Card>
         </Flex>}
+        <Footer />
         </div>
     )
 }

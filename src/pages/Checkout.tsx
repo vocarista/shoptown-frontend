@@ -9,13 +9,13 @@ import useAlert from '../store/alert';
 import { InfoCircledIcon } from '@radix-ui/react-icons';
 import useUser from '../store/user';
 import useAuth from '../store/auth';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
+import Footer from '../components/Footer';
 
 const backgroundImageStyle = {
     backgroundImage: `url(${Bg})`,
     backgroundSize: "cover",
     backGroundPosition: 'center',
-    // Other background properties (position, repeat, etc.) can be added here
 };
 
 const Checkout = () => {
@@ -272,7 +272,7 @@ const Checkout = () => {
 
     return (<div style = {backgroundImageStyle} className = "h-auto pb-5 min-h-screen">
         <NavigationBar />
-        <div className={`checkout flex flex-col w-screen place-items-center mt-3`}>
+        <div className={`flex flex-col w-screen place-items-center mt-3`}>
             <Flex direction={`column`} className = {`${isMobile ? `w-[90vw]` : `w-[80vw]`}`}>
             <Accordion defaultActiveKey={['2']} alwaysOpen>
                 <Accordion.Item eventKey="0">
@@ -432,7 +432,7 @@ const Checkout = () => {
                 </Accordion.Item>
             </Accordion>
             </Flex>
-        </div></div>
+        </div><Footer /></div>
     )
 }
 

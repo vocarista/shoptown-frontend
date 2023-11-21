@@ -13,6 +13,7 @@ import useAuth from './store/auth';
 import AlertToast from './components/AlertToast';
 import useAlert from './store/alert';
 import { HashRouter as Router, Route, Routes } from 'react-router-dom';
+import Wishlist from './pages/Wishlist';
 
 function App() {
   const toggleIsMobile = useGeneral((state: any) => state.toggleIsMobile)
@@ -94,6 +95,7 @@ function App() {
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/wishlist" element = {<Wishlist />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </Router>
