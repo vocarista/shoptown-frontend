@@ -33,7 +33,7 @@ function App() {
           'Content-Type': 'application/json',
           'Authorization': `"Bearer ${token}"`,
         },
-        body: JSON.stringify(token)
+        body: JSON.stringify({token: token})
       })
       const data = await response.text();
 
@@ -61,6 +61,9 @@ function App() {
         const data = await response.json();
         setAllProducts(data);
         setDisplayProducts(data);
+      } else {
+        setAlert('An error occurred. Please try again later.');
+        setShowAlert(true);
       }
     }
     fetchProducts();
@@ -84,7 +87,6 @@ function App() {
       <AlertToast />
       <Router>
         <Routes>
-          {/* <Route path="*" element={<App />} index /> */}
           <Route path="/" element={<Home />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<Login />} />

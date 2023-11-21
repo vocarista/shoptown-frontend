@@ -76,7 +76,7 @@ const Profile = () => {
                 'Content-Type': 'application/json',
                 'Authorization': `"Bearer ${token}"`,
             },
-            body: JSON.stringify(value)
+            body: field === 'dob' ? JSON.stringify(value) : JSON.stringify({value: value})
         });
 
         if (response.status === 200) {
@@ -359,7 +359,7 @@ const Profile = () => {
                                                 </Flex>
                                             ) : (
                                                 <Flex>
-                                                    <Text>{user?.dob}</Text>
+                                                    <Text>{(new Date(user?.dob).toLocaleDateString())}</Text>
                                                 </Flex>
                                             )}
                                         </Table.Cell>
@@ -538,7 +538,7 @@ const Profile = () => {
                                 {
                                     user?.shippingList !== null ? 
                                     user?.shippingList?.map((address: Address) => {
-                                        return (
+                                        return address !== null ? (
                                             <Card variant="classic" className={`shadow-md shadow-white ${isMobile ? 'w-[80vw]' : 'w-auto'}`}>
                                                 <Flex direction={'column'}>
                                                     <Text className="font-semibold">{address.fullName}</Text>
@@ -557,7 +557,7 @@ const Profile = () => {
                                                     <Text className="font-semibold">Phone: {address.mobileNumber}</Text>
                                                 </Flex>
                                             </Card>
-                                        );
+                                        ) : null;
                                     }) : null
                                 }
                             </Flex>

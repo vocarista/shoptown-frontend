@@ -18,7 +18,6 @@ const Signup = () => {
     const setShowAlert = useAlert((state: any) => state.setShowAlert);
     const setAlert = useAlert((state: any) => state.setAlert);
     const navigate = useNavigate();
-    // const [isUsernameAvailable, setIsUsernameAvailable] = useState<boolean>(false);
 
     const backgroundImageStyle = {
         backgroundImage: `url(${authBg})`,
@@ -44,7 +43,7 @@ const Signup = () => {
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ username: username, password: password, firstName: firstName, lastName: lastName })
+                    body: JSON.stringify({ username: username, password: password, firstname: firstName, lastname: lastName })
                 });
 
                 if (response.status === 200) {

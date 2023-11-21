@@ -130,13 +130,13 @@ const NavigationBar = () => {
     <>
       <Navbar expand="lg" className="bg-body-tertiary w-screen">
         <Container fluid>
-          <Navbar.Brand href="/">
-            <img src= {logo} className={`${isMobile ? 'w-[30vw]' : 'w-[10vw]'}`} />
+          <Navbar.Brand><Link to = "/">
+            <img src= {logo} className={`${isMobile ? 'w-[30vw]' : 'w-[10vw]'}`} /></Link>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav className="me-auto my-2 my-lg-0" style={{ maxHeight: "auto" }} navbarScroll>
-              <Nav.Link href="/">Home</Nav.Link>
+              <Nav.Link><Link to = "/">Home</Link></Nav.Link>
               <Nav.Link href="https://github.com/vocarista/shoptown-frontend" target="_blank">
                 Github
               </Nav.Link>
@@ -144,7 +144,7 @@ const NavigationBar = () => {
               {isLoggedIn ? (
                 <NavDropdown title="Account" id="navbarScrollingDropdown">
                   <NavDropdown.Item><Link to = "/profile">Profile</Link></NavDropdown.Item>
-                  <NavDropdown.Item href="/orders">Orders</NavDropdown.Item>
+                  <NavDropdown.Item><Link to='/orders'>Orders</Link></NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item onClick={logoutHandler}>
                     <span className="text-red-600">Logout</span>
