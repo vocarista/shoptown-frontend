@@ -197,9 +197,9 @@ const Profile = () => {
     }
 
     return (
-        <div className="profile place-items-center flex flex-col h-auto pb-10" style={backgroundImageStyle}>
+        <div className="profile place-items-center flex flex-col min-h-screen h-auto pb-10" style={backgroundImageStyle}>
             <NavigationBar />
-            <Card className = {`${isMobile ? 'min-w-[90vw]' : `w-[90vw]`} mt-10`}>
+            <Card className = {`${isMobile ? 'min-w-[90vw]' : `w-[90vw]`} mt-10 h-auto`}>
                 <Accordion defaultActiveKey={'0'}>
                     <Accordion.Item eventKey={'0'}>
                         <Accordion.Header>Basic Details</Accordion.Header>
