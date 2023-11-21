@@ -58,7 +58,7 @@ const Wishlist = () => {
   return (
     <div style = {backgroundImageStyle} className = {`min-h-screen h-auto flex flex-col gap-3 place-items-center`}>
         <NavigationBar />
-        <Card className = {`w-[90vw] h-auto pb-3`}>
+        <Card className = {`w-[90vw] h-auto pb-3 mb-28`}>
             <Heading className = "text-center mb-3" size = "5">Wishlist</Heading>
             <Flex direction = "column" gap = "4">
                 {

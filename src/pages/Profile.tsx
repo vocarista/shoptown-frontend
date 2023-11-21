@@ -8,6 +8,7 @@ import Bg from '../assets/home-bg.jpg';
 import { Button, Card, Dialog, Flex, Heading, Table, Text, TextField } from '@radix-ui/themes';
 import { Accordion, Form } from 'react-bootstrap';
 import NavigationBar from '../components/NavigationBar';
+import Footer from '../components/Footer';
 
 const backgroundImageStyle = {
     backgroundImage: `url(${Bg})`,
@@ -837,6 +838,7 @@ const Profile = () => {
                     </Accordion.Item>
                 </Accordion>
             </Card>
+            <Footer />
         </div>
     )
 }

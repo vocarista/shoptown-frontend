@@ -8,6 +8,7 @@ import { Button, Card, Flex, Heading, Text } from '@radix-ui/themes';
 import useProducts from '../store/products';
 import NavigationBar from '../components/NavigationBar';
 import { Link } from 'react-router-dom';
+import Footer from '../components/Footer';
 
 const backgroundImageStyle = {
     backgroundImage: `url(${Bg})`,
@@ -72,12 +73,15 @@ const Orders = () => {
                             return (
                                 <Card className = {`shadow-black shadow-sm w-[85vw] h-auto`} >
                                    <Flex direction={`row`} gap = "3">
-                                        <img src = {order.image} className = {`${isMobile ? `w-10 h-10` : `w-[100px] h-auto`}`} />
+                                        <img src = {order.image} className = {`${isMobile ? `w-10` : `w-[100px]`} h-fit`} />
                                         <Flex direction = "column" className = "flex-1">
-                                            <Text>{order.title}</Text>
+                                            <Text className = "font-bold">{order.title}</Text>
                                             <Text className = "font-thin">Category: <Text className = "font-semibold">{order.category}</Text></Text>
                                             <Text className = "font-thin">Price: <Text className = "font-semibold">${order.price}</Text></Text>
                                             <Text className = "font-thin">Quantity: <Text className = "font-semibold">{order.qty}</Text></Text>
+                                            <Text className = "font-thin">Ordered on: <Text className = "font-semibold">{new Date(order.orderDate).toLocaleDateString()}</Text></Text>
+                                            <Text className = "font-thin">Arriving on: <Text className = "font-semibold">{new Date(order.arrivalDate).toLocaleDateString()}</Text></Text>
+
                                         </Flex>
                                         <Text className = "font-thin">Total: <Text className = "font-semibold">${order.qty * order.price}</Text></Text>
                                    </Flex>
@@ -88,6 +92,7 @@ const Orders = () => {
                     <Link className= "place-self-center" to = "/"><Button size = "4" variant = "surface">Home</Button></Link>
                 </Flex>
             </Card>
+            <Footer />
         </div>
     )
 }

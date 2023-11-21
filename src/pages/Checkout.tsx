@@ -26,16 +26,16 @@ const Checkout = () => {
     const navigate = useNavigate();
     const token = localStorage.getItem('token');
 
-    const [country, setCountry] = useState<string>('');
-    const [fullName, setFullName] = useState<string>('');
-    const [mobileNumber, setMobileNumber] = useState<string>('');
-    const [pincode, setPincode] = useState<string>('');
-    const [houseNumber, setHouseNumber] = useState<string>('');
-    const [street, setStreet] = useState<string>('');
-    const [area, setArea] = useState<string>('');
-    const [city, setCity] = useState<string>('');
-    const [state, setState] = useState<string>('');
-    const [landmark, setLandmark] = useState<string>('');
+    const [country, setCountry] = useState<string>('India');
+    const [fullName, setFullName] = useState<string>('John Doe');
+    const [mobileNumber, setMobileNumber] = useState<string>('+910000000000');
+    const [pincode, setPincode] = useState<string>('303007');
+    const [houseNumber, setHouseNumber] = useState<string>('001');
+    const [street, setStreet] = useState<string>('Dehmi Kalan');
+    const [area, setArea] = useState<string>('Bagru');
+    const [city, setCity] = useState<string>('Jaipur');
+    const [state, setState] = useState<string>('Rajasthan');
+    const [landmark, setLandmark] = useState<string>('Manipal University Jaipur');
     const [defaultAddress, setDefaultAddress] = useState<boolean>(false);
 
     const finalPrice = useUser((state) => state.finalPrice);
@@ -194,78 +194,74 @@ const Checkout = () => {
     }
 
     const orderHandler = async () => {
-
-        try {
-            const response = await fetch(`${base}/user/address/add-shipping-address`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `"Bearer ${token}"`,
-                },
-                body: JSON.stringify({
-                    fullName: fullName,
-                    mobileNumber: mobileNumber,
-                    pincode: pincode,
-                    houseNumber: houseNumber,
-                    street: street,
-                    area: area,
-                    city: city,
-                    state: state,
-                    landmark: landmark,
-                    country: country,
-                    defaultAddress: defaultAddress,
-                })
-            });
-
-            let newOrders: any[] = cart.map((item: any) => {
-                return {
-                    ...item,
-                    orderDate: new Date(Date.now()),
-                    paymentMode: selectedPaymentMode,
-                    arrivalDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-                }
+        const response = await fetch(`${base}/user/address/add-shipping-address`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `"Bearer ${token}"`,
+            },
+            body: JSON.stringify({
+                fullName: fullName,
+                mobileNumber: mobileNumber,
+                pincode: pincode,
+                houseNumber: houseNumber,
+                street: street,
+                area: area,
+                city: city,
+                state: state,
+                landmark: landmark,
+                country: country,
+                defaultAddress: defaultAddress,
             })
+        });
 
-            if (response.status === 200) {
-                newOrders.forEach(async (order: any) => {
-                    const orderResponse = await fetch(`${base}/user/orders/add-to-orders`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `"Bearer ${token}"`,
-                        }, 
-                        body: JSON.stringify(order)
-                    });
+        let newOrders: any[] = cart.map((item: any) => {
+            return {
+                ...item,
+                orderDate: new Date(Date.now()),
+                paymentMode: selectedPaymentMode,
+                arrivalDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+            }
+        })
 
-                    if (orderResponse.status !== 200) {
-                        throw new Error('Error adding order');
-                    }
-                })
-
-                const allOrders = [...orders, ...newOrders];
-                const cartResponse = await fetch(`${base}/user/cart/empty`, {
-                    method: 'DELETE',
+        if (response.status === 200) {
+            newOrders.forEach(async (order: any) => {
+                const orderResponse = await fetch(`${base}/user/orders/add-to-orders`, {
+                    method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `"Bearer ${token}"`,
-                    }
+                    }, 
+                    body: JSON.stringify(order)
                 });
 
-                if (cartResponse.status === 204) {
-                    setOrderList(allOrders);
-                    setCartList([]);
-                    setCartItems([]);
-                    setAlert('Order placed successfully');
-                    setShowAlert(true);
-                    navigate('/');
-                } else {
-                    throw new Error('Error emptying cart');
+                if (orderResponse.status !== 200) {
+                    throw new Error('Error adding order');
                 }
+            })
+
+            const allOrders = [...orders, ...newOrders];
+            const cartResponse = await fetch(`${base}/user/cart/empty`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `"Bearer ${token}"`,
+                }
+            });
+
+            if (cartResponse.status === 204) {
+                setOrderList(allOrders);
+                setCartList([]);
+                setCartItems([]);
+                setAlert('Order placed successfully');
+                setShowAlert(true);
+                navigate('/');
             } else {
-                throw new Error('Error adding address');
+                setAlert('Error emptying cart');
+                setShowAlert(true);
             }
-        } catch (error) {
-            setAlert('An error occurred. Please try again later.');
+        } else {
+            setAlert('Error adding address');
             setShowAlert(true);
         }
     }
@@ -423,7 +419,7 @@ const Checkout = () => {
                                 <Table.Cell></Table.Cell>
                                 <Table.Cell></Table.Cell>
                                 <Table.Cell></Table.Cell>
-                                <Table.Cell><Button size={`${isMobile ? `2` : `3`}`} variant = "surface" onClick = {orderHandler}>Place Order</Button></Table.Cell>
+                                <Table.Cell><Button size={`${isMobile ? `2` : `3`}`} variant = "surface" onClick = {orderHandler} className = "p-3">Place Order</Button></Table.Cell>
                             </Table.Row>
                             </Table.Body>
                             </Table.Root>
