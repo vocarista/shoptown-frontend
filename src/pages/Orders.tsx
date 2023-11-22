@@ -65,7 +65,7 @@ const Orders = () => {
     return (
         <div style = {backgroundImageStyle} className="orders w-screen h-auto min-h-screen flex flex-col place-items-center gap-3">
             <NavigationBar />
-            <Card className = "w-[90vw] h-auto pb-4">
+            <Card className = "w-[90vw] h-auto pb-4 mb-24">
                 <Flex direction = "column" gap = "4">
                     <Heading>Orders</Heading>
                     <Flex direction = "column" gap = "4" >
@@ -73,7 +73,7 @@ const Orders = () => {
                             return (
                                 <Card className = {`shadow-black shadow-sm w-[85vw] h-auto`} >
                                    <Flex direction={`row`} gap = "3">
-                                        <img src = {order.image} className = {`${isMobile ? `w-10` : `w-[100px]`} h-fit`} />
+                                        <img src = {order.image} className = {`${isMobile ? `w-10 h-10` : `w-[100px]`}`} />
                                         <Flex direction = "column" className = "flex-1">
                                             <Text className = "font-bold">{order.title}</Text>
                                             <Text className = "font-thin">Category: <Text className = "font-semibold">{order.category}</Text></Text>

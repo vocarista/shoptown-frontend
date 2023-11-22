@@ -1,4 +1,4 @@
-import { Button, Card, Flex, Heading, Strong, Text } from '@radix-ui/themes';
+import { Button, Card, Dialog, Flex, Heading, Strong, Text } from '@radix-ui/themes';
 import useUser from '../store/user';
 import useAlert from '../store/alert';
 import { CartItem, WishlistItem } from '../store/user';
@@ -159,7 +159,27 @@ const ProductCard = ({ data }: any) => {
                             setShowAlert(true);
                         }
                     }}>Add to Cart</Button>
-                    <Button variant = "outline" size = "3">View Details</Button>
+                    <Dialog.Root>
+                        <Dialog.Trigger>
+                        <Button variant = "outline" size = "3">View Details</Button>
+                        </Dialog.Trigger>
+
+                        <Dialog.Content style={{ maxWidth: 450 }}>
+                          <Dialog.Title className = "text-center">Description</Dialog.Title>
+
+                          <Flex direction="column" className = "place-items-center justify-center" gap="3">
+                            <Text className = "text-center">{description}</Text>
+                          </Flex>
+
+                          <Flex gap="3" mt="4" justify="end" direction="column" className="place-items-center">
+                            <Dialog.Close>
+                              <Button variant="soft" color="gray">
+                                Close
+                              </Button>
+                            </Dialog.Close>
+                            </Flex>
+                          </Dialog.Content>
+                        </Dialog.Root>
                     <Button variant = "ghost" radius = "full" onClick = {() => {
                         if (isLoggedIn) {
                             wishlistHandler();

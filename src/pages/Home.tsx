@@ -1,28 +1,28 @@
 import NavigationBar from "../components/NavigationBar";
 import Bg from "../assets/home-bg.jpg";
 import useGeneral from "../store/general";
-import { Flex, ScrollArea } from "@radix-ui/themes";
 import SideBar from "../components/SideBar";
 import ProductPage from "../components/ProductPage";
+import Footer from "../components/Footer";
 
 const backgroundImageStyle = {
   backgroundImage: `url(${Bg})`,
   backgroundSize: 'cover',
   backGroundPosition: 'center',
-  backgroundRepeat: "repeat",
 };
 
 const Home = () => {
   const isMobile = useGeneral((state) => state.isMobile);
 
   return (
-  <Flex style={backgroundImageStyle} className={`${isMobile ? `w-screen` : ``} pb-5`} gap="2" direction="column">
+    <div style={backgroundImageStyle} className={`${isMobile ? `w-screen` : ``} pb-5 h-auto min-h-screen gap-2 flex flex-col`}>
       <NavigationBar />
-      <div style={backgroundImageStyle} className={`flex ${isMobile ? "place-items-center flex-col h-[120vh]" : "place-items-start p-2 flex-row"} gap-4 pl-4`}>
+      <div className={`flex ${isMobile ? "place-items-center flex-col h-auto" : "place-items-start p-2 flex-row"} gap-4 pl-4 mb-24`}>
         <SideBar />
-        <ScrollArea size={"2"} className = {`place-items-center w-auto`} scrollbars="vertical" type="auto"><ProductPage /></ScrollArea>
+        <ProductPage />
       </div>
-    </Flex>
+      <Footer />
+    </div>
   );
 };
 

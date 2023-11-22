@@ -46,8 +46,7 @@ const CartCard = ({ data }: any) => {
             }
         })
         setCartList(newCart);
-        setCount(count + 1)
-        window.location.reload();
+        setCount((prevCount) => prevCount + 1);
     }
     else {
         setAlert('Error updating cart');
@@ -71,9 +70,6 @@ const CartCard = ({ data }: any) => {
             setCartList(newCart);
             setAlert('Item removed from cart');
             setShowAlert(true);
-            setTimeout(() => {
-                window.location.reload();
-            }, 500);
         } else {
             setAlert('Error removing item from cart');
             setShowAlert(true);
@@ -95,8 +91,7 @@ const CartCard = ({ data }: any) => {
                 }
             })
             setCartList(newCart);
-            setCount(count - 1)
-            window.location.reload();
+            setCount((prevCount) => prevCount - 1);
         } else {
             setAlert('Error updating cart');
             setShowAlert(true);
@@ -111,7 +106,7 @@ const CartCard = ({ data }: any) => {
         <Text size="4">{title}</Text>
         <Text>Category: <Strong>{categories[category]}</Strong></Text>
         <Flex direction={`row`} className = "mt-3" gap = "4">
-            <Button variant={`ghost`} className={`ml-2`} onClick = {quantityIncreaseHandler}><PlusCircledIcon className = "h-auto w-7" /></Button><p className = "text-2xl">{qty}</p>
+            <Button variant={`ghost`} className={`ml-2`} onClick = {quantityIncreaseHandler}><PlusCircledIcon className = "h-auto w-7" /></Button><p className = "text-2xl">{count}</p>
             <Button variant={`ghost`} className={`ml-2`} onClick = {quantityDecreaseHandler}><MinusCircledIcon className = "h-auto w-7" /></Button>
         </Flex>
       </Flex>
