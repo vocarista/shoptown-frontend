@@ -225,22 +225,17 @@ const Checkout = () => {
         })
 
         if (response.status === 200) {
-            newOrders.forEach(async (order: any) => {
-                const orderResponse = await fetch(`${base}/user/orders/add-to-orders`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `"Bearer ${token}"`,
-                    }, 
-                    body: JSON.stringify(order)
-                });
+            const orderResponse = await fetch(`${base}/user/orders/add-to-orders`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `"Bearer ${token}"`,
+                }, 
+                body: JSON.stringify(newOrders)
+            });
 
-                if (orderResponse.status !== 200) {
-                    throw new Error('Error adding order');
-                }
-            })
-
-            const allOrders = [...orders, ...newOrders];
+            if (orderResponse.status === 200) {
+                const allOrders = [...orders, ...newOrders];
             const cartResponse = await fetch(`${base}/user/cart/empty`, {
                 method: 'DELETE',
                 headers: {
@@ -260,6 +255,9 @@ const Checkout = () => {
                 setAlert('Error emptying cart');
                 setShowAlert(true);
             }
+            }
+
+            
         } else {
             setAlert('Error adding address');
             setShowAlert(true);
