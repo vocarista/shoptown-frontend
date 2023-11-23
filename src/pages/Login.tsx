@@ -26,24 +26,31 @@ const Login = () => {
 
 
     async function loginHandler() {
-        const response = await fetch(`${base}/user/auth/authenticate`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ username: username, password: password })
-        })
-
-        if (response.status === 200) {
-            const data = await response.json();
-            localStorage.setItem('token', data.token);
-            localStorage.setItem('username', username);
-            localStorage.setItem('isLoggedIn', 'true');
-            navigate('/');
-        } else {
-            setAlert('Invalid username or password');
+        if (username === '' || password === '') {
+            setAlert('Please enter all fields');
             setShowAlert(true);
+            return;
+        } else {
+            const response = await fetch(`${base}/user/auth/authenticate`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username: username.trim(), password: password.trim() })
+            })
+    
+            if (response.status === 200) {
+                const data = await response.json();
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('username', username);
+                localStorage.setItem('isLoggedIn', 'true');
+                navigate('/');
+            } else {
+                setAlert('Invalid username or password');
+                setShowAlert(true);
+            }
         }
+        
     }
 
     return (

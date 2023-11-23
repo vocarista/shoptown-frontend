@@ -266,7 +266,7 @@ const Checkout = () => {
 
     return (<div style = {backgroundImageStyle} className = "h-auto pb-5 min-h-screen">
         <NavigationBar />
-        <div className={`flex flex-col w-screen place-items-center mt-3`}>
+        <div className={`flex flex-col w-screen place-items-center mt-3 mb-24`}>
             <Flex direction={`column`} className = {`${isMobile ? `w-[90vw]` : `w-[80vw]`}`}>
             <Accordion defaultActiveKey={['2']} alwaysOpen>
                 <Accordion.Item eventKey="0">
@@ -417,7 +417,7 @@ const Checkout = () => {
                                 <Table.Cell></Table.Cell>
                                 <Table.Cell></Table.Cell>
                                 <Table.Cell></Table.Cell>
-                                <Table.Cell><Button size={`${isMobile ? `2` : `3`}`} variant = "surface" onClick = {orderHandler} className = "p-3">Place Order</Button></Table.Cell>
+                                <Table.Cell><Button size={`${isMobile ? `2` : `3`}`} variant = "surface" onClick = {orderHandler} className = "py-4">Place Order</Button></Table.Cell>
                             </Table.Row>
                             </Table.Body>
                             </Table.Root>

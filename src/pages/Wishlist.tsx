@@ -66,7 +66,7 @@ const Wishlist = () => {
                         return (
                             <Card className = "h-auto w-[85vw] shadow-sm shadow-slate-700">
                                 <Flex direction = "row" gap = "3">
-                                    <img src = {item.image} className = {`${isMobile ? `w-10` : `w-[100px]`} h-fit`} />
+                                    <img src = {item.image} className = {`${isMobile ? `w-10 h-full` : `w-[100px]`} h-full`} />
                                     <Flex direction = "column" gap = "1">
                                         <Text className = "font-semibold">{item.title}</Text>
                                         <Text><Text className = "font-semibold">Description: </Text>{item.description.substring(0, 80)}</Text>

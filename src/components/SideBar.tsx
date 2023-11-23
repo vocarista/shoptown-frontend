@@ -98,7 +98,7 @@ const SideBar = () => {
     }
 
   return (
-    <Card className = {`${isMobile ? `w-[95vw]` : `w-auto`} mr-4`}>
+    <Card className = {`${isMobile ? `w-[90vw]` : `w-auto`} mr-4`}>
         {isMobile ? <MobileSideBar /> : <DesktopSideBar /> }
     </Card>
   )

@@ -25,40 +25,46 @@ const Signup = () => {
     };
 
     async function signupHandler() {
-        const checkResponse = await fetch(`${base}/user/auth/is-username-available`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(username)
-        })
-
-        if (checkResponse.status === 200) {
-            const isAvailable = await checkResponse.text()
-            let isUsernameAvailable: boolean = isAvailable === 'true';
-
-            if (isUsernameAvailable) {
-                const response = await fetch(`${base}/user/auth/register`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ username: username, password: password, firstname: firstName, lastname: lastName })
-                });
-
-                if (response.status === 200) {
-                    const data = await response.json();
-                    localStorage.setItem('token', data.token);
-                    localStorage.setItem('username', username);
-                    localStorage.setItem('isLoggedIn', 'true');
-                    navigate('/');
+        if (username === '' || password === '' || firstName === '' || lastName === '') {
+            setAlert('Please enter all fields');
+            setShowAlert(true);
+            return;
+        } else {
+            const checkResponse = await fetch(`${base}/user/auth/is-username-available`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(username)
+            })
+    
+            if (checkResponse.status === 200) {
+                const isAvailable = await checkResponse.text()
+                let isUsernameAvailable: boolean = isAvailable === 'true';
+    
+                if (isUsernameAvailable) {
+                    const response = await fetch(`${base}/user/auth/register`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ username: username, password: password, firstname: firstName, lastname: lastName })
+                    });
+    
+                    if (response.status === 200) {
+                        const data = await response.json();
+                        localStorage.setItem('token', data.token);
+                        localStorage.setItem('username', username);
+                        localStorage.setItem('isLoggedIn', 'true');
+                        navigate('/');
+                    } else {
+                        setShowAlert(true);
+                        setAlert('An error occurred. Please try again later.');
+                    }
                 } else {
                     setShowAlert(true);
-                    setAlert('An error occurred. Please try again later.');
+                    setAlert('Username is not available');
                 }
-            } else {
-                setShowAlert(true);
-                setAlert('Username is not available');
             }
         }
     }
