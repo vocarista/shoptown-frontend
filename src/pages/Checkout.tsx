@@ -65,9 +65,86 @@ const Checkout = () => {
         setSelectedPaymentMode(selectedMode);
     }
 
-    const AddressForm = () => {
-        return (
-            <Flex direction={`column`} gap="4">
+    const orderHandler = async () => {
+        const response = await fetch(`${base}/user/address/add-shipping-address`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `"Bearer ${token}"`,
+            },
+            body: JSON.stringify({
+                fullName: fullName,
+                mobileNumber: mobileNumber,
+                pincode: pincode,
+                houseNumber: houseNumber,
+                street: street,
+                area: area,
+                city: city,
+                state: state,
+                landmark: landmark,
+                country: country,
+                defaultAddress: defaultAddress,
+            })
+        });
+
+        let newOrders: any[] = cart.map((item: any) => {
+            return {
+                ...item,
+                orderDate: new Date(Date.now()),
+                paymentMode: selectedPaymentMode,
+                arrivalDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+            }
+        })
+
+        if (response.status === 200) {
+            const orderResponse = await fetch(`${base}/user/orders/add-to-orders`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `"Bearer ${token}"`,
+                }, 
+                body: JSON.stringify(newOrders)
+            });
+
+            if (orderResponse.status === 200) {
+                const allOrders = [...orders, ...newOrders];
+            const cartResponse = await fetch(`${base}/user/cart/empty`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `"Bearer ${token}"`,
+                }
+            });
+
+            if (cartResponse.status === 204) {
+                setOrderList(allOrders);
+                setCartList([]);
+                setCartItems([]);
+                setAlert('Order placed successfully');
+                setShowAlert(true);
+                navigate('/');
+            } else {
+                setAlert('Error emptying cart');
+                setShowAlert(true);
+            }
+            }
+
+            
+        } else {
+            setAlert('Error adding address');
+            setShowAlert(true);
+        }
+    }
+
+    return (<div style = {backgroundImageStyle} className = "h-auto pb-5 min-h-screen">
+        <NavigationBar />
+        <div className={`flex flex-col w-screen place-items-center mt-3 mb-24`}>
+            <Flex direction={`column`} className = {`${isMobile ? `w-[90vw]` : `w-[80vw]`}`}>
+            <Accordion defaultActiveKey={['2']} alwaysOpen>
+                <Accordion.Item eventKey="0">
+                  <Accordion.Header>Delivery Address</Accordion.Header>
+                  <Accordion.Body>
+                  <Flex direction={`column`} gap="4">
                 <Form>
                     <Form.Group className="mb-3" controlId="formBasicFullName">
                         <Form.Label>Full Name</Form.Label>
@@ -190,89 +267,6 @@ const Checkout = () => {
                     </Form.Group>
                 </Form>
             </Flex>
-        );
-    }
-
-    const orderHandler = async () => {
-        const response = await fetch(`${base}/user/address/add-shipping-address`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `"Bearer ${token}"`,
-            },
-            body: JSON.stringify({
-                fullName: fullName,
-                mobileNumber: mobileNumber,
-                pincode: pincode,
-                houseNumber: houseNumber,
-                street: street,
-                area: area,
-                city: city,
-                state: state,
-                landmark: landmark,
-                country: country,
-                defaultAddress: defaultAddress,
-            })
-        });
-
-        let newOrders: any[] = cart.map((item: any) => {
-            return {
-                ...item,
-                orderDate: new Date(Date.now()),
-                paymentMode: selectedPaymentMode,
-                arrivalDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-            }
-        })
-
-        if (response.status === 200) {
-            const orderResponse = await fetch(`${base}/user/orders/add-to-orders`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `"Bearer ${token}"`,
-                }, 
-                body: JSON.stringify(newOrders)
-            });
-
-            if (orderResponse.status === 200) {
-                const allOrders = [...orders, ...newOrders];
-            const cartResponse = await fetch(`${base}/user/cart/empty`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `"Bearer ${token}"`,
-                }
-            });
-
-            if (cartResponse.status === 204) {
-                setOrderList(allOrders);
-                setCartList([]);
-                setCartItems([]);
-                setAlert('Order placed successfully');
-                setShowAlert(true);
-                navigate('/');
-            } else {
-                setAlert('Error emptying cart');
-                setShowAlert(true);
-            }
-            }
-
-            
-        } else {
-            setAlert('Error adding address');
-            setShowAlert(true);
-        }
-    }
-
-    return (<div style = {backgroundImageStyle} className = "h-auto pb-5 min-h-screen">
-        <NavigationBar />
-        <div className={`flex flex-col w-screen place-items-center mt-3 mb-24`}>
-            <Flex direction={`column`} className = {`${isMobile ? `w-[90vw]` : `w-[80vw]`}`}>
-            <Accordion defaultActiveKey={['2']} alwaysOpen>
-                <Accordion.Item eventKey="0">
-                  <Accordion.Header>Delivery Address</Accordion.Header>
-                  <Accordion.Body>
-                   <AddressForm />
                   </Accordion.Body>
                 </Accordion.Item>
                 <Accordion.Item eventKey="1">
