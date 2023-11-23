@@ -9,6 +9,7 @@ import { Button, Card, Dialog, Flex, Heading, Table, Text, TextField } from '@ra
 import { Accordion, Form } from 'react-bootstrap';
 import NavigationBar from '../components/NavigationBar';
 import Footer from '../components/Footer';
+import Loader from '../components/Loader';
 
 const backgroundImageStyle = {
     backgroundImage: `url(${Bg})`,
@@ -26,6 +27,7 @@ const Profile = () => {
     const setShowAlert = useAlert((state: any) => state.setShowAlert);
     const navigate = useNavigate();
     const isMobile = useGeneral((state: any) => state.isMobile);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const [updateFirstName, setUpdateFirstName] = useState<boolean>(false);
     const [updateLastName, setUpdateLastName] = useState<boolean>(false);
@@ -61,6 +63,7 @@ const Profile = () => {
             if (response.status === 200) {
                 const tempUser = await response.json();
                 setUser(tempUser);
+                setIsLoading(false);
             } else {
                 setAlert('An error occurred. Please try again later.');
                 setShowAlert(true);
@@ -198,6 +201,7 @@ const Profile = () => {
 
     return (
         <div className="profile place-items-center flex flex-col min-h-screen h-auto pb-10" style={backgroundImageStyle}>
+            {isLoading && <Loader />}
             <NavigationBar />
             <Card className = {`${isMobile ? 'w-[95vw]' : `w-[90vw]`} mt-10 h-auto mb-24`}>
                 <Accordion defaultActiveKey={'0'}>

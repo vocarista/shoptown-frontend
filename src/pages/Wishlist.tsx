@@ -9,6 +9,7 @@ import useProducts from "../store/products";
 import NavigationBar from "../components/NavigationBar";
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
+import Loader from "../components/Loader";
 
 const backgroundImageStyle = {
     backgroundImage: `url(${Bg})`,
@@ -25,6 +26,7 @@ const Wishlist = () => {
     const allProducts = useProducts((state) => state.allProducts);
     const isMobile = useGeneral((state) => state.isMobile);
     const [wishlistItems, setWishlistItems] = useState<any[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         async function fetchWishlist() {
@@ -46,6 +48,7 @@ const Wishlist = () => {
                     }
                 });
                 setWishlistItems(finalWishlistItems);
+                setIsLoading(false);
             } else {
                 console.log('Error fetching wishlist');
                 setAlert('Error fetching wishlist');
@@ -57,6 +60,7 @@ const Wishlist = () => {
 
   return (
     <div style = {backgroundImageStyle} className = {`min-h-screen h-auto flex flex-col gap-3 place-items-center`}>
+        {isLoading && <Loader />}
         <NavigationBar />
         <Card className = {`w-[90vw] h-auto pb-3 mb-28`}>
             <Heading className = "text-center mb-3" size = "5">Wishlist</Heading>

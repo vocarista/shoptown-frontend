@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Home from './pages/Home';
 import Cart from './pages/Cart';
 import Login from './pages/Login';
@@ -14,6 +14,7 @@ import AlertToast from './components/AlertToast';
 import useAlert from './store/alert';
 import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 import Wishlist from './pages/Wishlist';
+import Loader from './components/Loader';
 
 function App() {
   const toggleIsMobile = useGeneral((state: any) => state.toggleIsMobile)
@@ -22,6 +23,7 @@ function App() {
   const base = useAuth((state: any) => state.base);
   const setAlert = useAlert((state: any) => state.setAlert);
   const setShowAlert = useAlert((state: any) => state.setShowAlert);
+  const [isLoading, setIsLoading] = useState(true);
 
   const token = localStorage.getItem('token');
   
@@ -62,6 +64,7 @@ function App() {
         const data = await response.json();
         setAllProducts(data);
         setDisplayProducts(data);
+        setIsLoading(false);
       } else {
         setAlert('An error occurred. Please try again later.');
         setShowAlert(true);
@@ -85,6 +88,7 @@ function App() {
 
   return (
     <div className = "App">
+      {isLoading ? <Loader /> : null}
       <AlertToast />
       <Router>
         <Routes>

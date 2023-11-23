@@ -9,6 +9,7 @@ import useProducts from '../store/products';
 import NavigationBar from '../components/NavigationBar';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
+import Loader from '../components/Loader';
 
 const backgroundImageStyle = {
     backgroundImage: `url(${Bg})`,
@@ -25,6 +26,7 @@ const Orders = () => {
     const allProducts = useProducts((state) => state.allProducts);
     const [orderItems, setOrderItems] = useState<any[]>([]);
     const isMobile = useGeneral((state) => state.isMobile);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         async function fetchOrders() {
@@ -50,6 +52,7 @@ const Orders = () => {
                     }
                 })
                 setOrderItems(finalOrderItems);
+                setIsLoading(false);
             } else {
                 console.log('Error fetching orders');
                 setAlert('Error fetching orders');
@@ -64,6 +67,7 @@ const Orders = () => {
 
     return (
         <div style = {backgroundImageStyle} className="orders w-screen h-auto min-h-screen flex flex-col place-items-center gap-3">
+            {isLoading && <Loader />}
             <NavigationBar />
             <Card className = "w-[90vw] h-auto pb-4 mb-24">
                 <Flex direction = "column" gap = "4">
