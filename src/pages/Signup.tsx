@@ -48,7 +48,7 @@ const Signup = () => {
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify({ username: username, password: password, firstname: firstName, lastname: lastName })
+                        body: JSON.stringify({ username: username.trim(), password: password.trim(), firstname: firstName.trim(), lastname: lastName.trim() })
                     });
     
                     if (response.status === 200) {
